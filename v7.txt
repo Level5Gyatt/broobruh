@@ -2244,20 +2244,20 @@ function GetDataValue(v)
 	elseif typeof(v) == "ColorSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."-"..x.Value:ToHex().."_"
+			s = s..tostring(x.Time).."|"..x.Value:ToHex().."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"ColorSequence",s}
 	elseif typeof(v) == "ColorSequenceKeypoint" then
-		return {"ColorSequenceKeypoint",tostring(v.Time).."-"..v.Value:ToHex()}
+		return {"ColorSequenceKeypoint",tostring(v.Time).."|"..v.Value:ToHex()}
 	elseif typeof(v) == "DateTime" then
 		return {"DateTime",tostring(v.UnixTimestamp)}
 	elseif typeof(v) == "EnumItem" then
-		return {"EnumItem",tostring(v.EnumType).."-"..v.Name}
+		return {"EnumItem",tostring(v.EnumType).."|"..v.Name}
 	elseif typeof(v) == "Faces" then
-		return {"Faces",tostring(v.Top).."-"..tostring(v.Bottom).."-"..tostring(v.Left).."-"..tostring(v.Right).."-"..tostring(v.Back).."-"..tostring(v.Front)}
+		return {"Faces",tostring(v.Top).."|"..tostring(v.Bottom).."|"..tostring(v.Left).."|"..tostring(v.Right).."|"..tostring(v.Back).."|"..tostring(v.Front)}
 	elseif typeof(v) == "Font" then
-		return {"Font",tostring(v.Family).."-"..tostring(v.Weight).."-"..tostring(v.Style)}
+		return {"Font",tostring(v.Family).."|"..tostring(v.Weight).."|"..tostring(v.Style)}
 	elseif typeof(v) == "Instance" then
 		if v:FindFirstChild("SkibidiRizzId") == nil then
 			return nil
@@ -2270,35 +2270,35 @@ function GetDataValue(v)
 		end
 		return {"Instance",s}
 	elseif typeof(v) == "NumberRange" then
-		return {"NumberRange",tostring(v.Min).."-"..tostring(v.Max)}
+		return {"NumberRange",tostring(v.Min).."|"..tostring(v.Max)}
 	elseif typeof(v) == "NumberSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."-"..tostring(x.Value).."-"..tostring(x.Envelope).."_"
+			s = s..tostring(x.Time).."|"..tostring(x.Value).."|"..tostring(x.Envelope).."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"NumberSequence",s}
 	elseif typeof(v) == "NumberSequenceKeypoint" then
-		return {"NumberSequenceKeypoint",tostring(v.Time).."-"..tostring(v.Value).."-"..tostring(v.Envelope)}
+		return {"NumberSequenceKeypoint",tostring(v.Time).."|"..tostring(v.Value).."|"..tostring(v.Envelope)}
 	elseif typeof(v) == "PhysicalProperties" then
-		return {"PhysicalProperties",tostring(v.Density).."-"..tostring(v.Friction).."-"..tostring(v.Elasticity).."-"..tostring(v.FrictionWeight).."-"..tostring(v.ElasticityWeight)}
+		return {"PhysicalProperties",tostring(v.Density).."|"..tostring(v.Friction).."|"..tostring(v.Elasticity).."|"..tostring(v.FrictionWeight).."|"..tostring(v.ElasticityWeight)}
 
 	elseif typeof(v) == "UDim" then
-		return {"UDim",tostring(v.Scale).."-"..tostring(v.Offset)}
+		return {"UDim",tostring(v.Scale).."|"..tostring(v.Offset)}
 	elseif typeof(v) == "UDim2" then
-		return {"UDim2",tostring(v.X.Scale).."-"..tostring(v.X.Offset).."-"..tostring(v.Y.Scale).."-"..tostring(v.Y.Offset)}
+		return {"UDim2",tostring(v.X.Scale).."|"..tostring(v.X.Offset).."|"..tostring(v.Y.Scale).."|"..tostring(v.Y.Offset)}
 	elseif typeof(v) == "Vector2" then
-		return {"Vector2",tostring(v.X).."-"..tostring(v.Y)}
+		return {"Vector2",tostring(v.X).."|"..tostring(v.Y)}
 	elseif typeof(v) == "Vector3" then
-		return {"Vector3",tostring(v.X).."-"..tostring(v.Y).."-"..tostring(v.Z)}
+		return {"Vector3",tostring(v.X).."|"..tostring(v.Y).."|"..tostring(v.Z)}
 	elseif typeof(v) == "boolean" then
 		return {"boolean",tostring(v)}
 	elseif typeof(v) == "number" then
 		return {"number",tostring(v)}
 	elseif typeof(v) == "Rect" then
-		return {"Rect",tostring(v.Min.X).."-"..tostring(v.Min.Y).."-"..tostring(v.Max.X).."-"..tostring(v.Max.Y)}
+		return {"Rect",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y)}
 	elseif typeof(v) == "Region3int16" then
-		return {"Region3int16",tostring(v.Min.X).."-"..tostring(v.Min.Y).."-"..tostring(v.Min.Z).."-"..tostring(v.Max.X).."-"..tostring(v.Max.Y).."-"..tostring(v.Max.Z)}
+		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
 	elseif typeof(v) == "string" then
 		local s = v
 		s:gsub('"',"&quot;")
@@ -2312,7 +2312,7 @@ end
 
 function GetList(obj)
 	local tab = {}
-	local GroupClass = {"PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
+	local GroupClass = {"PostEffect"|"PartOperation"|"DataModelMesh"|"SlidingBallConstraint"|"JointInstance"|"FileMesh"|"GuiObject"|"GuiButton"|"TriangleMeshPart"|"GuiBase3d"|"PartAdornment"|"Accoutrement"|"BasePart"|"GuiBase2d"|"LayerCollector"|"Model"|"ControllerBase"|"Constraint"}
 	local class = obj.ClassName
 	if obj.ClassName == "MeshPart" then
 		class = "SpecialMesh"
