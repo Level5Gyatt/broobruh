@@ -2224,9 +2224,13 @@ function GetPath(v)
 	local e = v
 	while e ~= target do
 		e = e.Parent
+if not e then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
+if e == target then
 	return s
+else return nil
+end
 end
 
 function GetDataValue(v)
