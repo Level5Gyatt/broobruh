@@ -773,7 +773,6 @@ local PropertyList = {PropertyData = {
 		"WalkToPoint"
 	},
 	HumanoidDescription = {
-		"AccessoryBlob",
 		"BackAccessory",
 		"BodyTypeScale",
 		"ClimbAnimation",
@@ -2321,9 +2320,10 @@ function GetList(obj)
 				tab[v] = GetDataValue(val)
 			else
 				warn(obj.ClassName,v)
+				print("pls just...")
 				continue
 			end
-			tab[v] = GetDataValue(obj[v])
+			--tab[v] = GetDataValue(obj[v])
 			if obj.ClassName ~= "MeshPart" then
 				local e = obj[v]
 				--print(obj.ClassName,v)
