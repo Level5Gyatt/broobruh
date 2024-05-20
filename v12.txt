@@ -2264,15 +2264,20 @@ function GetDataValue(v)
 		return {"Font",tostring(v.Family).."|"..tostring(v.Weight).."|"..tostring(v.Style)}
 	elseif typeof(v) == "Instance" then
 		if v:FindFirstChild("SkibidiRizzId") == nil then
-			return nil
-		end
-		local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
-		local e = v
-		while e ~= target do
-			e = e.Parent
-			s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
-		end
-		return {"Instance",s}
+		return nil
+	end
+	local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
+	local e = v
+	while e ~= target do
+		e = e.Parent
+if not e then break end
+		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
+	end
+if e == target then
+	return {"Instance",s}
+else return nil
+end
+		
 	elseif typeof(v) == "NumberRange" then
 		return {"NumberRange",tostring(v.Min).."|"..tostring(v.Max)}
 	elseif typeof(v) == "NumberSequence" then
