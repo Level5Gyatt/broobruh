@@ -2321,6 +2321,7 @@ function GetList(obj)
 				tab[v] = GetDataValue(val)
 			else
 				warn(obj.ClassName,v)
+				continue
 			end
 			tab[v] = GetDataValue(obj[v])
 			if obj.ClassName ~= "MeshPart" then
@@ -2419,4 +2420,4 @@ writefile(FileName,LeString)
 
 
 --
---loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/st.txt',true))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v2',true))()
