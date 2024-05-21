@@ -16,5 +16,5 @@ else
   end
   newFol.Parent = game.ReplicatedStorage
   
-  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v23.txt',true))()
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v24.txt',true))()
 end
