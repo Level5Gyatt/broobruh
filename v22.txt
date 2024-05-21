@@ -1,19 +1,19 @@
 local ws = workspace
 local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
 if FileName:IsA("StringValue") then
-  FileName = FileName.Value
+	FileName = FileName.Value
 end
 local HttpService = game:GetService("HttpService")
 local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
 local target = {ws}
 if OhioTargetFolder then
-  target = {}
-  for _,v in pairs(OhioTargetFolder:GetChildren()) do
-	table.insert(target,v.Value)
-  end
+	target = {}
+	for _,v in pairs(OhioTargetFolder:GetChildren()) do
+		table.insert(target,v.Value)
+	end
 end
 print(FileName)
-print(LeString = HttpService:JSONEncode(target))
+print(HttpService:JSONEncode(target))
 local PropertyList = {PropertyData = {
 	Accessory = {
 		"AccessoryType"
@@ -2236,13 +2236,13 @@ function GetPath(v)
 	local e = v
 	while e ~= target[targetNum] do
 		e = e.Parent
-if not e then break end
+		if not e then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
-if e == target[targetNum] then
-	return s
-else return nil
-end
+	if e == target[targetNum] then
+		return s
+	else return nil
+	end
 end
 
 function GetDataValue(v)
@@ -2276,20 +2276,20 @@ function GetDataValue(v)
 		return {"Font",tostring(v.Family).."|"..tostring(v.Weight).."|"..tostring(v.Style)}
 	elseif typeof(v) == "Instance" then
 		if v:FindFirstChild("SkibidiRizzId") == nil then
-		return nil
-	end
-	local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
-	local e = v
-	while e ~= target[targetNum] do
-		e = e.Parent
-	if not e then break end
-		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
-	end
-if e == target[targetNum] then
-	return {"Instance",s}
-else return nil
-end
-		
+			return nil
+		end
+		local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
+		local e = v
+		while e ~= target[targetNum] do
+			e = e.Parent
+			if not e then break end
+			s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
+		end
+		if e == target[targetNum] then
+			return {"Instance",s}
+		else return nil
+		end
+
 	elseif typeof(v) == "NumberRange" then
 		return {"NumberRange",tostring(v.Min).."|"..tostring(v.Max)}
 	elseif typeof(v) == "NumberSequence" then
@@ -2352,17 +2352,17 @@ function GetList(obj)
 			end
 			--tab[v] = GetDataValue(obj[v])
 			--if obj.ClassName ~= "MeshPart" then
-				local e = obj[v]
-				local suc,val = pcall(function() obj[v] = e return true end)
-				--print(obj.ClassName,v)
-				if suc then
-					obj[v] = e
-				else
-					UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
-					warn(obj.ClassName,v,"Read only")
-					continue
-				end
-				
+			local e = obj[v]
+			local suc,val = pcall(function() obj[v] = e return true end)
+			--print(obj.ClassName,v)
+			if suc then
+				obj[v] = e
+			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
+				warn(obj.ClassName,v,"Read only")
+				continue
+			end
+
 			--end
 		end
 	else
@@ -2442,7 +2442,7 @@ end
 
 print(HttpService:JSONEncode(target))
 for i=1,#target do
-	
+
 	count = count + #(target[i]:GetDescendants())
 	AddId(target[i],i)
 end
