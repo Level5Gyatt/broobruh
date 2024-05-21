@@ -782,7 +782,6 @@ local PropertyList = {PropertyData = {
 		"WalkToPoint"
 	},
 	HumanoidDescription = {
-		"AccessoryBlob",
 		"BackAccessory",
 		"BodyTypeScale",
 		"ClimbAnimation",
@@ -1084,7 +1083,6 @@ local PropertyList = {PropertyData = {
 	MeshPart = {
 		"DoubleSided",
 		"MeshId",
-		"MeshSize",
 		"RenderFidelity",
 		"TextureID"
 	},
@@ -1477,8 +1475,6 @@ local PropertyList = {PropertyData = {
 		"Script"
 	},
 	ScrollingFrame = {
-		"AbsoluteCanvasSize",
-		"AbsoluteWindowSize",
 		"AutomaticCanvasSize",
 		"BottomImage",
 		"CanvasPosition",
@@ -1841,7 +1837,6 @@ local PropertyList = {PropertyData = {
 		"RichText",
 		"Text",
 		"TextColor3",
-		"TextFits",
 		"TextScaled",
 		"TextSize",
 		"TextStrokeColor3",
@@ -1985,8 +1980,6 @@ local PropertyList = {PropertyData = {
 		"Transparency"
 	},
 	UIGridLayout = {
-		"AbsoluteCellCount",
-		"AbsoluteCellSize",
 		"CellPadding",
 		"CellSize",
 		"FillDirectionMaxCells",
@@ -2142,8 +2135,6 @@ local PropertyList = {PropertyData = {
 	VideoFrame = {
 		"Looped",
 		"Playing",
-		"Resolution",
-		"TimeLength",
 		"TimePosition",
 		"Video",
 		"Volume"
@@ -2190,8 +2181,6 @@ local PropertyList = {PropertyData = {
 	},
 	WrapLayer = {
 		"BindOffset",
-		"Color",
-		"DebugMode",
 		"Enabled",
 		"Order",
 		"Puffiness",
@@ -2215,7 +2204,13 @@ local PropertyList = {PropertyData = {
 		"AdShape",
 		"EnableVideoAds",
 		"FallbackImage"
-	}
+	},
+	TouchTransmitter = {
+		
+	},
+	Configuration = {
+		
+	},
 }}
 
 print("Workign???")
@@ -2352,6 +2347,7 @@ function GetList(obj)
 			end
 			--tab[v] = GetDataValue(obj[v])
 			--if obj.ClassName ~= "MeshPart" then
+continue
 			local e = obj[v]
 			local suc,val = pcall(function() obj[v] = e return true end)
 			--print(obj.ClassName,v)
