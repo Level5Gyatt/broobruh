@@ -2442,7 +2442,7 @@ end
 
 for i=1,#target do
 	count = count + #target[i]:GetDescendants()
-	AddId(target,i)
+	AddId(target[i],i)
 end
 
 
