@@ -13,4 +13,4 @@ for _,v in pairs(target) do
 end
 newFol.Parent = game.ReplicatedStorage
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v14.txt',true))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v22.txt',true))()
