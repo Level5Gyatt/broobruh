@@ -4,8 +4,16 @@ if FileName:IsA("StringValue") then
   FileName = FileName.Value
 end
 local HttpService = game:GetService("HttpService")
-local target = ws
+local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
+local target = {ws}
+if OhioTargetFolder then
+  target = {}
+  for _,v in pairs(OhioTargetFolder:GetChildren()) do
+	table.insert(target,v.Value)
+  end
+end
 print(FileName)
+print(target)
 local PropertyList = {PropertyData = {
 	Accessory = {
 		"AccessoryType"
@@ -236,9 +244,7 @@ local PropertyList = {PropertyData = {
 		"Velocity"
 	},
 	Bone = {
-		"Transform",
-		"TransformedCFrame",
-		"TransformedWorldCFrame"
+		"Transform"
 	},
 	BoolValue = {
 		"Value"
@@ -2205,6 +2211,11 @@ local PropertyList = {PropertyData = {
 	RemoteEvent = {
 
 	},
+	AdGui = {
+		"AdShape",
+		"EnableVideoAds",
+		"FallbackImage"
+	}
 }}
 
 print("Workign???")
@@ -2319,6 +2330,8 @@ end
 
 end
 
+local UnusedProperty = ""
+
 function GetList(obj)
 	local tab = {}
 	local GroupClass = {"PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
@@ -2332,6 +2345,7 @@ function GetList(obj)
 			if suc then
 				tab[v] = GetDataValue(val)
 			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
 				warn(obj.ClassName,v,"Can't read")
 				continue
 			end
@@ -2343,6 +2357,7 @@ function GetList(obj)
 				if suc then
 					obj[v] = e
 				else
+					UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
 					warn(obj.ClassName,v,"Read only")
 					continue
 				end
@@ -2376,6 +2391,9 @@ function GetItem(obj)
 		task.wait()
 	end
 	c = c + 1
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" then
+		return
+	end
 	local tab = {}
 	local ProList = GetList(obj)
 	tab = ProList
@@ -2421,22 +2439,31 @@ function AddId(obj,i)
 	end
 end
 
-for _,v in pairs(target:GetDescendants()) do
-	if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
-		v:Destroy()
+
+for i=1,#target do
+	count = count + #target[i]:GetDescendants()
+	AddId(target,i)
+end
+
+
+for i=1,#target do
+	GetItem(target[i])
+end
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
 	end
 end
-local target2 = ws
-count = #target2:GetDescendants()
-AddId(target,1)
-
-GetItem(target)
 
 LeString = HttpService:JSONEncode(gtab)
 print(LeString)
 
 writefile(FileName,LeString)
+writefile("UnusedProperty.txt",UnusedProperty)
 
 
 --
---loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v9.txt',true))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v14.txt',true))()
