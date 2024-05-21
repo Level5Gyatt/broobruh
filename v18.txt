@@ -2224,6 +2224,7 @@ local count = 0
 local l = 3
 local fi = 1
 local nam = "test"
+local targetNum = 1
 local gtab = {}
 --game.ReplicatedStorage.Str:ClearAllChildren()
 
@@ -2233,12 +2234,12 @@ function GetPath(v)
 	end
 	local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
 	local e = v
-	while e ~= target do
+	while e ~= target[targetNum] do
 		e = e.Parent
 if not e then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
-if e == target then
+if e == target[targetNum] then
 	return s
 else return nil
 end
@@ -2281,7 +2282,7 @@ function GetDataValue(v)
 	local e = v
 	while e ~= target do
 		e = e.Parent
-if not e then break end
+	if not e then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
 if e == target then
@@ -2445,8 +2446,8 @@ for i=1,#target do
 	AddId(target[i],i)
 end
 
-
 for i=1,#target do
+	targetNum = i
 	GetItem(target[i])
 end
 
