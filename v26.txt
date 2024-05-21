@@ -2347,7 +2347,7 @@ function GetList(obj)
 			end
 			--tab[v] = GetDataValue(obj[v])
 			--if obj.ClassName ~= "MeshPart" then
-			
+
 			--[[
 			local e = obj[v]
 			local suc,val = pcall(function() obj[v] = e return true end)
@@ -2422,7 +2422,7 @@ function AddId(obj,i)
 		wait()
 		--print("progress: "..string(c).."/"..string(count))
 	end
-	if obj.ClassName = "PackageLink" then
+	if obj.ClassName == "PackageLink" then
 		return
 	end
 	if not obj:FindFirstChild("SkibidiRizzId") then
