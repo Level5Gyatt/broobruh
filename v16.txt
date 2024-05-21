@@ -2220,7 +2220,7 @@ local PropertyList = {PropertyData = {
 
 print("Workign???")
 local c = 1
-local count
+local count = 0
 local l = 3
 local fi = 1
 local nam = "test"
@@ -2441,7 +2441,7 @@ end
 
 
 for i=1,#target do
-	count = count + target[i]:GetDescendants()
+	count = count + #target[i]:GetDescendants()
 	AddId(target,i)
 end
 
