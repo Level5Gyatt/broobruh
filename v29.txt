@@ -1,5 +1,6 @@
 local ws = workspace
 local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
+local FileCount = 1
 if FileName:IsA("StringValue") then
 	FileName = FileName.Value
 end
@@ -2405,9 +2406,6 @@ function GetItem(obj)
 	end
 	tab["Path"] = GetPath(obj)
 	tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
-
-	local jst = HttpService:JSONEncode(tab)
-	l = l + jst:len()
 	table.insert(gtab,tab)
 
 	for _,v in pairs(obj:GetChildren()) do
@@ -2415,6 +2413,11 @@ function GetItem(obj)
 			continue
 		end
 		GetItem(v)
+	end
+	if #gtab >= 50000 then
+		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
+		gtab = {}
+		FileCount = FileCount + 1
 	end
 	return tab
 end
@@ -2466,7 +2469,7 @@ end
 LeString = HttpService:JSONEncode(gtab)
 print(LeString)
 
-writefile(FileName,LeString)
+writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",LeString)
 writefile("UnusedProperty.txt",UnusedProperty)
 
 
