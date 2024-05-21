@@ -2422,6 +2422,9 @@ function AddId(obj,i)
 		wait()
 		--print("progress: "..string(c).."/"..string(count))
 	end
+	if obj.ClassName = "PackageLink" then
+		return
+	end
 	if not obj:FindFirstChild("SkibidiRizzId") then
 		local NewId = Instance.new("IntValue")
 		NewId.Value = i
