@@ -2440,7 +2440,7 @@ function AddId(obj,i)
 	end
 end
 
-print(target)
+print(HttpService:JSONEncode(target))
 for i=1,#target do
 	
 	count = count + #(target[i]:GetDescendants())
