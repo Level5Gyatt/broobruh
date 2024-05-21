@@ -2232,6 +2232,7 @@ function GetPath(v)
 	while e ~= target[targetNum] do
 		e = e.Parent
 		if not e then break end
+		if not e:FindFirstChild("SkibidiRizzId") then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
 	if e == target[targetNum] then
