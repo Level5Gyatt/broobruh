@@ -2206,10 +2206,10 @@ local PropertyList = {PropertyData = {
 		"FallbackImage"
 	},
 	TouchTransmitter = {
-		
+
 	},
 	Configuration = {
-		
+
 	},
 }}
 
@@ -2347,7 +2347,8 @@ function GetList(obj)
 			end
 			--tab[v] = GetDataValue(obj[v])
 			--if obj.ClassName ~= "MeshPart" then
-continue
+			
+			--[[
 			local e = obj[v]
 			local suc,val = pcall(function() obj[v] = e return true end)
 			--print(obj.ClassName,v)
@@ -2358,6 +2359,7 @@ continue
 				warn(obj.ClassName,v,"Read only")
 				continue
 			end
+			]]
 
 			--end
 		end
