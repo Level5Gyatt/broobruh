@@ -2336,7 +2336,7 @@ function GetList(obj)
 				continue
 			end
 			--tab[v] = GetDataValue(obj[v])
-			if obj.ClassName ~= "MeshPart" then
+			--if obj.ClassName ~= "MeshPart" then
 				local e = obj[v]
 				local suc,val = pcall(function() obj[v] = e return true end)
 				--print(obj.ClassName,v)
@@ -2347,7 +2347,7 @@ function GetList(obj)
 					continue
 				end
 				
-			end
+			--end
 		end
 	else
 		warn("you forgor this object ",obj,obj.ClassName)
@@ -2380,7 +2380,7 @@ function GetItem(obj)
 	local ProList = GetList(obj)
 	tab = ProList
 	if obj.ClassName == "MeshPart" then
-		tab["Class"] = "SpecialMesh"
+		tab["Class"] = "MeshPart"
 	else
 		tab["Class"] = obj.ClassName
 	end
