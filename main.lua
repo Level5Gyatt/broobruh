@@ -38,5 +38,5 @@ else
   end
   
   
-  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v35.txt',true))()
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v36.txt',true))()
 end
