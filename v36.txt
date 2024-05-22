@@ -2444,7 +2444,7 @@ function GetItem(obj)
 		task.wait()
 	end
 	c = c + 1
-	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" then
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
 		return
 	end
 	local tab = {}
