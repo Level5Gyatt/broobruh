@@ -1,8 +1,12 @@
 local ws = workspace
 local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
+local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap") or 50000
 local FileCount = 1
 if FileName:IsA("StringValue") then
 	FileName = FileName.Value
+end
+if ItemsCap:IsA("IntValue") then
+	ItemsCap = FileName.Value
 end
 local HttpService = game:GetService("HttpService")
 local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
@@ -13,6 +17,7 @@ if OhioTargetFolder then
 		table.insert(target,v.Value)
 	end
 end
+ 
 print(FileName)
 print(HttpService:JSONEncode(target))
 local PropertyList = {PropertyData = {
@@ -929,6 +934,10 @@ local PropertyList = {PropertyData = {
 	Keyframe = {
 		"Time"
 	},
+	KeyframeSequence = {
+		"Time"
+	},
+
 	KeyframeMarker = {
 		"Value"
 	},
@@ -2227,7 +2236,12 @@ local PropertyList = {PropertyData = {
 	WorldModel = {
 
 	},
-}}
+	AnimationRigData = {
+
+	},
+
+}
+}
 
 print("Workign???")
 local c = 1
@@ -2429,7 +2443,7 @@ function GetItem(obj)
 		end
 		GetItem(v)
 	end
-	if #gtab >= 50000 then
+	if #gtab >= ItemsCap then
 		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
 		gtab = {}
 		FileCount = FileCount + 1
@@ -2481,6 +2495,7 @@ for _,vv in pairs(target) do
 	end
 end
 
+print(gtab,#gtab)
 LeString = HttpService:JSONEncode(gtab)
 print(LeString)
 
@@ -2489,4 +2504,4 @@ writefile("UnusedProperty.txt",UnusedProperty)
 
 
 --
---loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v14.txt',true))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v32.txt',true))()
