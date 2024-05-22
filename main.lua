@@ -7,7 +7,7 @@ else
   new.Value = Nam
   new.Name = "OhioFileName"
   new.Parent = game.ReplicatedStorage
-  local newCap = Instance.new("StringValue")
+  local newCap = Instance.new("IntValue")
   newCap.Value = ItemsCap
   newCap.Name = "OhioItemsCap"
   newCap.Parent = game.ReplicatedStorage
