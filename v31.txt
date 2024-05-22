@@ -2199,10 +2199,10 @@ local PropertyList = {PropertyData = {
 
 	},
 	RemoteFunction = {
-		
+
 	},
 	BindableEvent = {
-		
+
 	},
 	AdGui = {
 		"AdShape",
@@ -2210,16 +2210,16 @@ local PropertyList = {PropertyData = {
 		"FallbackImage"
 	},
 	TouchTransmitter = {
-		
+
 	},
 	Configuration = {
-		
+
 	},
 	UnreliableRemoteEvent = {
-		
+
 	},
 	AnimationController = {
-		
+
 	},
 	Hat = {
 
@@ -2227,7 +2227,7 @@ local PropertyList = {PropertyData = {
 	WorldModel = {
 
 	},
-}
+}}
 
 print("Workign???")
 local c = 1
