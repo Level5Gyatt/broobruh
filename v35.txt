@@ -2282,6 +2282,17 @@ function GetPath(v)
 	end
 end
 
+function removeHighAsciiChars(inputString)
+    local result = ""
+    for i = 1, #inputString do
+        local char = string.byte(inputString, i)
+        if char <= 127 then
+            result = result .. string.char(char)
+        end
+    end
+    return result
+end
+
 function GetDataValue(v)
 	if typeof(v) == "nil" then
 		return nil
@@ -2361,7 +2372,7 @@ function GetDataValue(v)
 	elseif typeof(v) == "string" then
 		local s = v
 		s:gsub('"',"&quot;")
-		return {"string",s}
+		return {"string",removeHighAsciiChars(s)}
 	else
 		warn("you forgor this datavalue "..typeof(v))
 		return {typeof(v)}
