@@ -1,4 +1,5 @@
 local Nam = ""
+local ItemsCap = 50000
 if Nam == "" then
   error("you forgor to enter filename :skull:")
 else
@@ -6,6 +7,10 @@ else
   new.Value = Nam
   new.Name = "OhioFileName"
   new.Parent = game.ReplicatedStorage
+  local newCap = Instance.new("StringValue")
+  newCap.Value = ItemsCap
+  newCap.Name = "OhioItemsCap"
+  newCap.Parent = game.ReplicatedStorage
   local target = {game.Workspace,game.StarterGui,game.Lighting,game.ReplicatedStorage}
   local newFol = Instance.new("Folder")
   newFol.Name = "OhioTargetFolder"
@@ -16,5 +21,5 @@ else
   end
   newFol.Parent = game.ReplicatedStorage
   
-  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v31.txt',true))()
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v32.txt',true))()
 end
