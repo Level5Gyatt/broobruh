@@ -1,12 +1,14 @@
 local ws = workspace
 local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
-local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap") or 50000
+local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap")
 local FileCount = 1
 if FileName:IsA("StringValue") then
 	FileName = FileName.Value
 end
 if ItemsCap:IsA("IntValue") then
-	ItemsCap = FileName.Value
+	ItemsCap = ItemsCap.Value
+else
+	ItemsCap = 50000
 end
 local HttpService = game:GetService("HttpService")
 local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
