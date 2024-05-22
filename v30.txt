@@ -272,7 +272,7 @@ local PropertyList = {PropertyData = {
 		"MaxAxisFieldOfView"
 	},
 	CanvasGroup = {
-		"GroupColor",
+		"GroupColor3",
 		"GroupTransparency"
 	},
 	ChannelSelectorSoundEffect = {
@@ -959,7 +959,6 @@ local PropertyList = {PropertyData = {
 		"GlobalShadows",
 		"OutdoorAmbient",
 		"ShadowSoftness",
-		"Technology",
 		"TimeOfDay"
 	},
 	LineForce = {
@@ -1422,10 +1421,11 @@ local PropertyList = {PropertyData = {
 		"WetLevel"
 	},
 	RigidConstraint = {
-		"Broken",
-		"DestructionEnabled",
-		"DestructionForce",
-		"DestructionTorque"
+		"Attachment0",
+		"Attachment1",
+		"Color",
+		"Enabled",
+		"Visible"
 	},
 	RocketPropulsion = {
 		"CartoonFactor",
@@ -1653,7 +1653,6 @@ local PropertyList = {PropertyData = {
 	StarterGui = {
 		"ScreenOrientation",
 		"ShowDevelopmentGui",
-		"VirtualCursorMode"
 	},
 	StarterPlayer = {
 		"AutoJumpEnabled",
@@ -2191,8 +2190,6 @@ local PropertyList = {PropertyData = {
 		"ShrinkFactor"
 	},
 	WrapTarget = {
-		"Color",
-		"DebugMode",
 		"Stiffness"
 	},
 	BindableFunction = {
@@ -2201,18 +2198,36 @@ local PropertyList = {PropertyData = {
 	RemoteEvent = {
 
 	},
+	RemoteFunction = {
+		
+	},
+	BindableEvent = {
+		
+	},
 	AdGui = {
 		"AdShape",
 		"EnableVideoAds",
 		"FallbackImage"
 	},
 	TouchTransmitter = {
-
+		
 	},
 	Configuration = {
+		
+	},
+	UnreliableRemoteEvent = {
+		
+	},
+	AnimationController = {
+		
+	},
+	Hat = {
 
 	},
-}}
+	WorldModel = {
+
+	},
+}
 
 print("Workign???")
 local c = 1
