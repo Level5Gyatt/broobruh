@@ -13,13 +13,22 @@ end
 local HttpService = game:GetService("HttpService")
 local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
 local target = {ws}
+
 if OhioTargetFolder then
 	target = {}
 	for _,v in pairs(OhioTargetFolder:GetChildren()) do
 		table.insert(target,v.Value)
 	end
 end
- 
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
+	end
+end
+
 print(FileName)
 print(HttpService:JSONEncode(target))
 local PropertyList = {PropertyData = {
