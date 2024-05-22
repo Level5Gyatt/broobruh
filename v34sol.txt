@@ -1,8 +1,36 @@
 local ws = workspace
-local FileName = "obby.txt"
+local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
+local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap")
+local FileCount = 1
+if FileName:IsA("StringValue") then
+	FileName = FileName.Value
+end
+if ItemsCap:IsA("IntValue") then
+	ItemsCap = ItemsCap.Value
+else
+	ItemsCap = 50000
+end
 local HttpService = game:GetService("HttpService")
-local target = ws
+local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
+local target = {ws}
+
+if OhioTargetFolder then
+	target = {}
+	for _,v in pairs(OhioTargetFolder:GetChildren()) do
+		table.insert(target,v.Value)
+	end
+end
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
+	end
+end
+
 print(FileName)
+print(HttpService:JSONEncode(target))
 local PropertyList = {PropertyData = {
 	Accessory = {
 		"AccessoryType"
@@ -233,9 +261,7 @@ local PropertyList = {PropertyData = {
 		"Velocity"
 	},
 	Bone = {
-		"Transform",
-		"TransformedCFrame",
-		"TransformedWorldCFrame"
+		"Transform"
 	},
 	BoolValue = {
 		"Value"
@@ -262,7 +288,7 @@ local PropertyList = {PropertyData = {
 		"MaxAxisFieldOfView"
 	},
 	CanvasGroup = {
-		"GroupColor",
+		"GroupColor3",
 		"GroupTransparency"
 	},
 	ChannelSelectorSoundEffect = {
@@ -773,7 +799,6 @@ local PropertyList = {PropertyData = {
 		"WalkToPoint"
 	},
 	HumanoidDescription = {
-		"AccessoryBlob",
 		"BackAccessory",
 		"BodyTypeScale",
 		"ClimbAnimation",
@@ -920,6 +945,10 @@ local PropertyList = {PropertyData = {
 	Keyframe = {
 		"Time"
 	},
+	KeyframeSequence = {
+		"Time"
+	},
+
 	KeyframeMarker = {
 		"Value"
 	},
@@ -950,7 +979,6 @@ local PropertyList = {PropertyData = {
 		"GlobalShadows",
 		"OutdoorAmbient",
 		"ShadowSoftness",
-		"Technology",
 		"TimeOfDay"
 	},
 	LineForce = {
@@ -1075,7 +1103,6 @@ local PropertyList = {PropertyData = {
 	MeshPart = {
 		"DoubleSided",
 		"MeshId",
-		"MeshSize",
 		"RenderFidelity",
 		"TextureID"
 	},
@@ -1414,10 +1441,11 @@ local PropertyList = {PropertyData = {
 		"WetLevel"
 	},
 	RigidConstraint = {
-		"Broken",
-		"DestructionEnabled",
-		"DestructionForce",
-		"DestructionTorque"
+		"Attachment0",
+		"Attachment1",
+		"Color",
+		"Enabled",
+		"Visible"
 	},
 	RocketPropulsion = {
 		"CartoonFactor",
@@ -1468,8 +1496,6 @@ local PropertyList = {PropertyData = {
 		"Script"
 	},
 	ScrollingFrame = {
-		"AbsoluteCanvasSize",
-		"AbsoluteWindowSize",
 		"AutomaticCanvasSize",
 		"BottomImage",
 		"CanvasPosition",
@@ -1647,7 +1673,6 @@ local PropertyList = {PropertyData = {
 	StarterGui = {
 		"ScreenOrientation",
 		"ShowDevelopmentGui",
-		"VirtualCursorMode"
 	},
 	StarterPlayer = {
 		"AutoJumpEnabled",
@@ -1832,7 +1857,6 @@ local PropertyList = {PropertyData = {
 		"RichText",
 		"Text",
 		"TextColor3",
-		"TextFits",
 		"TextScaled",
 		"TextSize",
 		"TextStrokeColor3",
@@ -1976,8 +2000,6 @@ local PropertyList = {PropertyData = {
 		"Transparency"
 	},
 	UIGridLayout = {
-		"AbsoluteCellCount",
-		"AbsoluteCellSize",
 		"CellPadding",
 		"CellSize",
 		"FillDirectionMaxCells",
@@ -2133,8 +2155,6 @@ local PropertyList = {PropertyData = {
 	VideoFrame = {
 		"Looped",
 		"Playing",
-		"Resolution",
-		"TimeLength",
 		"TimePosition",
 		"Video",
 		"Volume"
@@ -2181,8 +2201,6 @@ local PropertyList = {PropertyData = {
 	},
 	WrapLayer = {
 		"BindOffset",
-		"Color",
-		"DebugMode",
 		"Enabled",
 		"Order",
 		"Puffiness",
@@ -2192,8 +2210,6 @@ local PropertyList = {PropertyData = {
 		"ShrinkFactor"
 	},
 	WrapTarget = {
-		"Color",
-		"DebugMode",
 		"Stiffness"
 	},
 	BindableFunction = {
@@ -2202,14 +2218,49 @@ local PropertyList = {PropertyData = {
 	RemoteEvent = {
 
 	},
-}}
+	RemoteFunction = {
+
+	},
+	BindableEvent = {
+
+	},
+	AdGui = {
+		"AdShape",
+		"EnableVideoAds",
+		"FallbackImage"
+	},
+	TouchTransmitter = {
+
+	},
+	Configuration = {
+
+	},
+	UnreliableRemoteEvent = {
+
+	},
+	AnimationController = {
+
+	},
+	Hat = {
+
+	},
+	WorldModel = {
+
+	},
+	AnimationRigData = {
+
+	},
+
+}
+}
 
 print("Workign???")
 local c = 1
-local count
+local count = 0
 local l = 3
 local fi = 1
 local nam = "test"
+local targetNum = 1
 local gtab = {}
 --game.ReplicatedStorage.Str:ClearAllChildren()
 
@@ -2219,11 +2270,16 @@ function GetPath(v)
 	end
 	local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
 	local e = v
-	while e ~= target do
+	while e ~= target[targetNum] do
 		e = e.Parent
+		if not e then break end
+		if not e:FindFirstChild("SkibidiRizzId") then break end
 		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 	end
-	return s
+	if e == target[targetNum] then
+		return s
+	else return nil
+	end
 end
 
 function GetDataValue(v)
@@ -2241,71 +2297,79 @@ function GetDataValue(v)
 	elseif typeof(v) == "ColorSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."-"..x.Value:ToHex().."_"
+			s = s..tostring(x.Time).."|"..x.Value:ToHex().."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"ColorSequence",s}
 	elseif typeof(v) == "ColorSequenceKeypoint" then
-		return {"ColorSequenceKeypoint",tostring(v.Time).."-"..v.Value:ToHex()}
+		return {"ColorSequenceKeypoint",tostring(v.Time).."|"..v.Value:ToHex()}
 	elseif typeof(v) == "DateTime" then
 		return {"DateTime",tostring(v.UnixTimestamp)}
 	elseif typeof(v) == "EnumItem" then
-		return {"EnumItem",tostring(v.EnumType).."-"..v.Name}
+		return {"EnumItem",tostring(v.EnumType).."|"..v.Name}
 	elseif typeof(v) == "Faces" then
-		return {"Faces",tostring(v.Top).."-"..tostring(v.Bottom).."-"..tostring(v.Left).."-"..tostring(v.Right).."-"..tostring(v.Back).."-"..tostring(v.Front)}
+		return {"Faces",tostring(v.Top).."|"..tostring(v.Bottom).."|"..tostring(v.Left).."|"..tostring(v.Right).."|"..tostring(v.Back).."|"..tostring(v.Front)}
 	elseif typeof(v) == "Font" then
-		return {"Font",tostring(v.Family).."-"..tostring(v.Weight).."-"..tostring(v.Style)}
+		return {"Font",tostring(v.Family).."|"..tostring(v.Weight).."|"..tostring(v.Style)}
 	elseif typeof(v) == "Instance" then
 		if v:FindFirstChild("SkibidiRizzId") == nil then
 			return nil
 		end
 		local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
 		local e = v
-		while e ~= target do
+		while e ~= target[targetNum] do
 			e = e.Parent
+			if not e then break end
+			if not e:FindFirstChild("SkibidiRizzId") then break end
 			s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
 		end
-		return {"Instance",s}
+		if e == target[targetNum] then
+			return {"Instance",s}
+		else return nil
+		end
+
 	elseif typeof(v) == "NumberRange" then
-		return {"NumberRange",tostring(v.Min).."-"..tostring(v.Max)}
+		return {"NumberRange",tostring(v.Min).."|"..tostring(v.Max)}
 	elseif typeof(v) == "NumberSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."-"..tostring(x.Value).."-"..tostring(x.Envelope).."_"
+			s = s..tostring(x.Time).."|"..tostring(x.Value).."|"..tostring(x.Envelope).."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"NumberSequence",s}
 	elseif typeof(v) == "NumberSequenceKeypoint" then
-		return {"NumberSequenceKeypoint",tostring(v.Time).."-"..tostring(v.Value).."-"..tostring(v.Envelope)}
+		return {"NumberSequenceKeypoint",tostring(v.Time).."|"..tostring(v.Value).."|"..tostring(v.Envelope)}
 	elseif typeof(v) == "PhysicalProperties" then
-		return {"PhysicalProperties",tostring(v.Density).."-"..tostring(v.Friction).."-"..tostring(v.Elasticity).."-"..tostring(v.FrictionWeight).."-"..tostring(v.ElasticityWeight)}
+		return {"PhysicalProperties",tostring(v.Density).."|"..tostring(v.Friction).."|"..tostring(v.Elasticity).."|"..tostring(v.FrictionWeight).."|"..tostring(v.ElasticityWeight)}
 
 	elseif typeof(v) == "UDim" then
-		return {"UDim",tostring(v.Scale).."-"..tostring(v.Offset)}
+		return {"UDim",tostring(v.Scale).."|"..tostring(v.Offset)}
 	elseif typeof(v) == "UDim2" then
-		return {"UDim",tostring(v.X.Scale).."-"..tostring(v.X.Offset).."-"..tostring(v.Y.Scale).."-"..tostring(v.Y.Offset)}
+		return {"UDim2",tostring(v.X.Scale).."|"..tostring(v.X.Offset).."|"..tostring(v.Y.Scale).."|"..tostring(v.Y.Offset)}
 	elseif typeof(v) == "Vector2" then
-		return {"Vector2",tostring(v.X).."-"..tostring(v.Y)}
+		return {"Vector2",tostring(v.X).."|"..tostring(v.Y)}
 	elseif typeof(v) == "Vector3" then
-		return {"Vector3",tostring(v.X).."-"..tostring(v.Y).."-"..tostring(v.Z)}
+		return {"Vector3",tostring(v.X).."|"..tostring(v.Y).."|"..tostring(v.Z)}
 	elseif typeof(v) == "boolean" then
-		return {"Vector3",tostring(v)}
+		return {"boolean",tostring(v)}
 	elseif typeof(v) == "number" then
-		return {"Vector3",tostring(v)}
+		return {"number",tostring(v)}
 	elseif typeof(v) == "Rect" then
-		return {"Vector3",tostring(v.Min.X).."-"..tostring(v.Min.Y).."-"..tostring(v.Max.X).."-"..tostring(v.Max.Y)}
+		return {"Rect",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y)}
 	elseif typeof(v) == "Region3int16" then
-		return {"Vector3",tostring(v.Min.X).."-"..tostring(v.Min.Y).."-"..tostring(v.Min.Z).."-"..tostring(v.Max.X).."-"..tostring(v.Max.Y).."-"..tostring(v.Max.Z)}
+		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
 	elseif typeof(v) == "string" then
 		local s = v
 		s:gsub('"',"&quot;")
-		return {"Vector3",s}
+		return {"string",s}
 	else
 		warn("you forgor this datavalue "..typeof(v))
 		return {typeof(v)}
 	end
 
 end
+
+local UnusedProperty = ""
 
 function GetList(obj)
 	local tab = {}
@@ -2320,22 +2384,27 @@ function GetList(obj)
 			if suc then
 				tab[v] = GetDataValue(val)
 			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
 				warn(obj.ClassName,v,"Can't read")
 				continue
 			end
 			--tab[v] = GetDataValue(obj[v])
-			if obj.ClassName ~= "MeshPart" then
-				local e = obj[v]
-				local suc,val = pcall(function() obj[v] = e return true end)
-				--print(obj.ClassName,v)
-				if suc then
-					obj[v] = e
-				else
-					warn(obj.ClassName,v,"Read only")
-					continue
-				end
-				
+			--if obj.ClassName ~= "MeshPart" then
+
+			--[[
+			local e = obj[v]
+			local suc,val = pcall(function() obj[v] = e return true end)
+			--print(obj.ClassName,v)
+			if suc then
+				obj[v] = e
+			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
+				warn(obj.ClassName,v,"Read only")
+				continue
 			end
+			]]
+
+			--end
 		end
 	else
 		warn("you forgor this object ",obj,obj.ClassName)
@@ -2364,19 +2433,21 @@ function GetItem(obj)
 		task.wait()
 	end
 	c = c + 1
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" then
+		return
+	end
 	local tab = {}
 	local ProList = GetList(obj)
 	tab = ProList
 	if obj.ClassName == "MeshPart" then
-		tab["Class"] = "SpecialMesh"
+		tab["Class"] = "MeshPart"
 	else
 		tab["Class"] = obj.ClassName
 	end
 	tab["Path"] = GetPath(obj)
 	tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
-
-	local jst = HttpService:JSONEncode(tab)
-	l = l + jst:len()
+	print(obj,obj.ClassName)
+	print(HttpService:JSONEncode(tab))
 	table.insert(gtab,tab)
 
 	for _,v in pairs(obj:GetChildren()) do
@@ -2385,6 +2456,11 @@ function GetItem(obj)
 		end
 		GetItem(v)
 	end
+	if #gtab >= ItemsCap then
+		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
+		gtab = {}
+		FileCount = FileCount + 1
+	end
 	return tab
 end
 
@@ -2392,6 +2468,9 @@ function AddId(obj,i)
 	if c%250 == 0 then
 		wait()
 		--print("progress: "..string(c).."/"..string(count))
+	end
+	if obj.ClassName == "PackageLink" then
+		return
 	end
 	if not obj:FindFirstChild("SkibidiRizzId") then
 		local NewId = Instance.new("IntValue")
@@ -2409,22 +2488,33 @@ function AddId(obj,i)
 	end
 end
 
-for _,v in pairs(target:GetDescendants()) do
-	if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
-		v:Destroy()
+print(HttpService:JSONEncode(target))
+for i=1,#target do
+
+	count = count + #(target[i]:GetDescendants())
+	AddId(target[i],i)
+end
+
+for i=1,#target do
+	targetNum = i
+	GetItem(target[i])
+end
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
 	end
 end
-local target2 = ws
-count = #target2:GetDescendants()
-AddId(target,1)
 
-GetItem(target)
-
+print(gtab,#gtab)
 LeString = HttpService:JSONEncode(gtab)
 print(LeString)
 
-writefile(FileName,LeString)
+writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",LeString)
+writefile("UnusedProperty.txt",UnusedProperty)
 
 
 --
---loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v3.txt',true))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v34sol.txt',true))()
