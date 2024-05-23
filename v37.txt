@@ -2375,6 +2375,7 @@ function GetDataValue(v)
 	elseif typeof(v) == "string" then
 		local s = v
 		s:gsub('"',"&quot;")
+		s:gsub("]]","&clot;")
 		return {"string",removeHighAsciiChars(s)}
 	else
 		warn("you forgor this datavalue "..typeof(v))
