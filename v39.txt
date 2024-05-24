@@ -2374,9 +2374,7 @@ function GetDataValue(v)
 		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
 	elseif typeof(v) == "string" then
 		local s = v
-		s:gsub('"',"&quot;")
-		s:gsub("]]","&clo;")
-		return {"string",removeHighAsciiChars(s)}
+		return {"string",removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;")}
 	else
 		warn("you forgor this datavalue "..typeof(v))
 		return {typeof(v)}
