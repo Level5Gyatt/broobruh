@@ -2250,6 +2250,9 @@ local PropertyList = {PropertyData = {
 	AnimationRigData = {
 
 	},
+	Actor = {
+
+	},
 
 }
 }
@@ -2280,6 +2283,17 @@ function GetPath(v)
 		return s
 	else return nil
 	end
+end
+
+function removeHighAsciiChars(inputString)
+	local result = ""
+	for i = 1, #inputString do
+		local char = string.byte(inputString, i)
+		if char <= 127 then
+			result = result .. string.char(char)
+		end
+	end
+	return result
 end
 
 function GetDataValue(v)
@@ -2360,12 +2374,16 @@ function GetDataValue(v)
 		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
 	elseif typeof(v) == "string" then
 		local s = v
-		s:gsub('"',"&quot;")
-		return {"string",s}
-	else
-		warn("you forgor this datavalue "..typeof(v))
-		return {typeof(v)}
-	end
+		print(removeHighAsciiChars(s))
+		print(removeHighAsciiChars(s):gsub('"',"&quot;"))
+		print(removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;"))
+		print(removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;"):gsub("[".."[","&sta;"))
+		print(removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;"):gsub("[".."[","&sta;"):gsub("},{","&sep;"))
+		return {"string",removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;"):gsub("[".."[","&sta;"):gsub("},{","&sep;")}
+else
+	warn("you forgor this datavalue "..typeof(v))
+	return {typeof(v)}
+end
 
 end
 
@@ -2379,6 +2397,7 @@ function GetList(obj)
 		class = "SpecialMesh"
 	end
 	if typeof(PropertyList.PropertyData[obj.ClassName]) == "table" then
+
 		for _,v in pairs(PropertyList.PropertyData[obj.ClassName]) do
 			local suc,val = pcall(function() return obj[v] end)
 			if suc then
@@ -2414,8 +2433,8 @@ function GetList(obj)
 			if typeof(PropertyList.PropertyData[x]) == "table" then
 				for _,v in pairs(PropertyList.PropertyData[x]) do
 					tab[v] = GetDataValue(obj[v])
-					local e = obj[v]
-					obj[v] = e
+					--local e = obj[v]
+					--obj[v] = e
 				end
 			else
 				warn("you forgor this object ",obj,x)
@@ -2433,7 +2452,7 @@ function GetItem(obj)
 		task.wait()
 	end
 	c = c + 1
-	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" then
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
 		return
 	end
 	local tab = {}
@@ -2446,8 +2465,6 @@ function GetItem(obj)
 	end
 	tab["Path"] = GetPath(obj)
 	tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
-	print(obj,obj.ClassName)
-	print(HttpService:JSONEncode(tab))
 	table.insert(gtab,tab)
 
 	for _,v in pairs(obj:GetChildren()) do
@@ -2517,4 +2534,4 @@ writefile("UnusedProperty.txt",UnusedProperty)
 
 
 --
---loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v34sol.txt',true))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v32.txt',true))()
