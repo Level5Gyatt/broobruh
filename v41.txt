@@ -2251,9 +2251,9 @@ local PropertyList = {PropertyData = {
 
 	},
 	Actor = {
-		
+
 	},
-	
+
 }
 }
 
@@ -2374,11 +2374,11 @@ function GetDataValue(v)
 		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
 	elseif typeof(v) == "string" then
 		local s = v
-		return {"string",removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;")}:gsub("[[","&sta;")}:gsub("},{","&sep;")}
-	else
-		warn("you forgor this datavalue "..typeof(v))
-		return {typeof(v)}
-	end
+		return {"string",removeHighAsciiChars(s):gsub('"',"&quot;"):gsub("]]","&clo;"):gsub("[[","&sta;"):gsub("},{","&sep;")}
+else
+	warn("you forgor this datavalue "..typeof(v))
+	return {typeof(v)}
+end
 
 end
 
@@ -2392,7 +2392,7 @@ function GetList(obj)
 		class = "SpecialMesh"
 	end
 	if typeof(PropertyList.PropertyData[obj.ClassName]) == "table" then
-		
+
 		for _,v in pairs(PropertyList.PropertyData[obj.ClassName]) do
 			local suc,val = pcall(function() return obj[v] end)
 			if suc then
