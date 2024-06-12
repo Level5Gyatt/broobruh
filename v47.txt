@@ -2253,6 +2253,40 @@ local PropertyList = {PropertyData = {
 	Actor = {
 
 	},
+	IntersectOperation = {
+
+	},
+	IKControl = {
+		"ChainRoot",
+		"Enabled",
+		"EndEffector",
+		"EndEffectorOffset",
+		"Offset",
+		"Pole",
+		"Priority",
+		"SmoothTime",
+		"Target",
+		"Type",
+		"Weight",
+	},
+	Backpack = {
+
+	},
+	Vector3Curve = {
+
+	},
+	CurveAnimation = {
+
+	},
+	AudioListener = {
+
+	},
+	Wire = {
+
+	},
+	AudioDeviceOutput = {
+
+	},
 
 }
 }
@@ -2296,6 +2330,10 @@ function removeHighAsciiChars(inputString)
 	return result
 end
 
+function NumberFloatFix(n)
+	return math.round(n*1000)/1000
+end
+
 function GetDataValue(v)
 	if typeof(v) == "nil" then
 		return nil
@@ -2305,18 +2343,30 @@ function GetDataValue(v)
 	elseif typeof(v) == "BrickColor" then
 		return {"BrickColor",v.Number}
 	elseif typeof(v) == "CFrame" then
-		return {"CFrame",tostring(v)}
+		local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = v:GetComponents()
+		return {"CFrame",tostring(NumberFloatFix(x)).."|"..
+			tostring(NumberFloatFix(y)).."|"..
+			tostring(NumberFloatFix(z)).."|"..
+			tostring(NumberFloatFix(R00)).."|"..
+			tostring(NumberFloatFix(R01)).."|"..
+			tostring(NumberFloatFix(R02)).."|"..
+			tostring(NumberFloatFix(R10)).."|"..
+			tostring(NumberFloatFix(R11)).."|"..
+			tostring(NumberFloatFix(R12)).."|"..
+			tostring(NumberFloatFix(R20)).."|"..
+			tostring(NumberFloatFix(R21)).."|"..
+			tostring(NumberFloatFix(R22))}
 	elseif typeof(v) == "Color3" then
 		return {"Color3",v:ToHex()}
 	elseif typeof(v) == "ColorSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."|"..x.Value:ToHex().."_"
+			s = s..tostring(NumberFloatFix(x.Time)).."|"..x.Value:ToHex().."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"ColorSequence",s}
 	elseif typeof(v) == "ColorSequenceKeypoint" then
-		return {"ColorSequenceKeypoint",tostring(v.Time).."|"..v.Value:ToHex()}
+		return {"ColorSequenceKeypoint",tostring(NumberFloatFix(v.Time)).."|"..v.Value:ToHex()}
 	elseif typeof(v) == "DateTime" then
 		return {"DateTime",tostring(v.UnixTimestamp)}
 	elseif typeof(v) == "EnumItem" then
@@ -2343,31 +2393,31 @@ function GetDataValue(v)
 		end
 
 	elseif typeof(v) == "NumberRange" then
-		return {"NumberRange",tostring(v.Min).."|"..tostring(v.Max)}
+		return {"NumberRange",tostring(NumberFloatFix(v.Min)).."|"..tostring(NumberFloatFix(v.Max))}
 	elseif typeof(v) == "NumberSequence" then
 		local s = ""
 		for _,x in pairs(v.Keypoints) do
-			s = s..tostring(x.Time).."|"..tostring(x.Value).."|"..tostring(x.Envelope).."_"
+			s = s..tostring(NumberFloatFix(x.Time)).."|"..tostring(NumberFloatFix(x.Value)).."|"..tostring(NumberFloatFix(x.Envelope)).."_"
 		end
 		s = string.sub(s,1,s:len()-1)
 		return {"NumberSequence",s}
 	elseif typeof(v) == "NumberSequenceKeypoint" then
-		return {"NumberSequenceKeypoint",tostring(v.Time).."|"..tostring(v.Value).."|"..tostring(v.Envelope)}
+		return {"NumberSequenceKeypoint",tostring(NumberFloatFix(v.Time)).."|"..tostring(NumberFloatFix(v.Value)).."|"..tostring(NumberFloatFix(v.Envelope))}
 	elseif typeof(v) == "PhysicalProperties" then
 		return {"PhysicalProperties",tostring(v.Density).."|"..tostring(v.Friction).."|"..tostring(v.Elasticity).."|"..tostring(v.FrictionWeight).."|"..tostring(v.ElasticityWeight)}
 
 	elseif typeof(v) == "UDim" then
-		return {"UDim",tostring(v.Scale).."|"..tostring(v.Offset)}
+		return {"UDim",tostring(NumberFloatFix(v.Scale)).."|"..tostring(NumberFloatFix(v.Offset))}
 	elseif typeof(v) == "UDim2" then
-		return {"UDim2",tostring(v.X.Scale).."|"..tostring(v.X.Offset).."|"..tostring(v.Y.Scale).."|"..tostring(v.Y.Offset)}
+		return {"UDim2",tostring(NumberFloatFix(v.X.Scale)).."|"..tostring(NumberFloatFix(v.X.Offset)).."|"..tostring(NumberFloatFix(v.Y.Scale)).."|"..tostring(NumberFloatFix(v.Y.Offset))}
 	elseif typeof(v) == "Vector2" then
-		return {"Vector2",tostring(v.X).."|"..tostring(v.Y)}
+		return {"Vector2",tostring(NumberFloatFix(v.X)).."|"..tostring(NumberFloatFix(v.Y))}
 	elseif typeof(v) == "Vector3" then
-		return {"Vector3",tostring(v.X).."|"..tostring(v.Y).."|"..tostring(v.Z)}
+		return {"Vector3",tostring(NumberFloatFix(v.X)).."|"..tostring(NumberFloatFix(v.Y)).."|"..tostring(NumberFloatFix(v.Z))}
 	elseif typeof(v) == "boolean" then
 		return {"boolean",tostring(v)}
 	elseif typeof(v) == "number" then
-		return {"number",tostring(v)}
+		return {"number",tostring(NumberFloatFix(v))}
 	elseif typeof(v) == "Rect" then
 		return {"Rect",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y)}
 	elseif typeof(v) == "Region3int16" then
@@ -2375,10 +2425,10 @@ function GetDataValue(v)
 	elseif typeof(v) == "string" then
 		local s = v
 		return {"string",removeHighAsciiChars(s:sub(1,100)):gsub('"',"&quot;"):gsub("},{","&sep;")}
-else
-	warn("you forgor this datavalue "..typeof(v))
-	return {typeof(v)}
-end
+	else
+		warn("you forgor this datavalue "..typeof(v))
+		return {typeof(v)}
+	end
 
 end
 
