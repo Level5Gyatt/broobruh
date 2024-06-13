@@ -106,6 +106,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 
 NextButton.MouseButton1Click:Connect(function()
+	plr.Character.PrimaryPart.Anchored = true
 	i = i + 1
 	if i > cou then
 		j = j + 1
@@ -117,12 +118,14 @@ NextButton.MouseButton1Click:Connect(function()
 		end
 	end
 	local vec3 = string.split(pos[i],",")
-	TweenService:Create(part,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],vec3[2],vec3[3])}):Play()
+	TweenService:Create(part,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],tonumber(vec3[2])+2,vec3[3])}):Play()
+	TweenService:Create(plr.Character.PrimaryPart,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],tonumber(vec3[2])-10,vec3[3])}):Play()
 	part.Orientation = Rota[j]
 	TextLabel.Text = "Rotation "..tostring(j)..". "..tostring(i).."/"..tostring(cou)
 end)
 
 PreviousButton.MouseButton1Click:Connect(function()
+	plr.Character.PrimaryPart.Anchored = true
 	i = i - 1
 	if i < 1 then
 		j = j - 1
@@ -134,7 +137,8 @@ PreviousButton.MouseButton1Click:Connect(function()
 		end
 	end
 	local vec3 = string.split(pos[i],",")
-	TweenService:Create(part,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],vec3[2],vec3[3])}):Play()
+	TweenService:Create(part,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],tonumber(vec3[2])+2,vec3[3])}):Play()
+	TweenService:Create(plr.Character.PrimaryPart,TweenInfo.new(0.5),{Position = Vector3.new(vec3[1],tonumber(vec3[2])-10,vec3[3])}):Play()
 	part.Orientation = Rota[j]
 	TextLabel.Text = "Rotation "..tostring(j)..". "..tostring(i).."/"..tostring(cou)
 end)
