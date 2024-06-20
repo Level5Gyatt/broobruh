@@ -2513,7 +2513,7 @@ function GetItem(obj)
 	table.insert(gtab,tab)
 
 	for _,v in pairs(obj:GetChildren()) do
-		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v:FindFirstChild("SkibidiRizzId") then
 			continue
 		end
 		GetItem(v)
@@ -2542,7 +2542,7 @@ function AddId(obj,i)
 	end
 	local j = 1
 	for _,v in pairs(obj:GetChildren()) do
-		if (v.Name == "SkibidiRizzId" or v:IsA("IntValue")) or v:FindFirstChild("SkibidiRizzId") then
+		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) then
 			continue
 		end
 		AddId(v,j)
@@ -2551,11 +2551,7 @@ function AddId(obj,i)
 end
 
 print(HttpService:JSONEncode(target))
-for i=1,#target do
 
-	count = count + #(target[i]:GetDescendants())
-	AddId(target[i],i)
-end
 
 local IsOn = true
 
@@ -2575,6 +2571,10 @@ newButton.MouseButton1Click:Connect(function()
 end)
 
 while IsOn do
+	for i=1,#target do
+		count = count + #(target[i]:GetDescendants())
+		AddId(target[i],i)
+	end
 	for i=1,#target do
 		targetNum = i
 		GetItem(target[i])
