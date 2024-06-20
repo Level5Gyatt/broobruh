@@ -2500,20 +2500,25 @@ function GetItem(obj)
 	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
 		return
 	end
-	local tab = {}
-	local ProList = GetList(obj)
-	tab = ProList
-	if obj.ClassName == "MeshPart" then
-		tab["Class"] = "MeshPart"
-	else
-		tab["Class"] = obj.ClassName
+	if not obj:FindFirstChild("SkibidiBoolId") then
+		local tab = {}
+		local ProList = GetList(obj)
+		tab = ProList
+		if obj.ClassName == "MeshPart" then
+			tab["Class"] = "MeshPart"
+		else
+			tab["Class"] = obj.ClassName
+		end
+		tab["Path"] = GetPath(obj)
+		tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
+		table.insert(gtab,tab)
+		local bool = Instance.new("BoolValue")
+		bool.Name = "SkibidiBoolId"
+		bool.Parent = obj
 	end
-	tab["Path"] = GetPath(obj)
-	tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
-	table.insert(gtab,tab)
 
 	for _,v in pairs(obj:GetChildren()) do
-		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v:FindFirstChild("SkibidiRizzId") then
+		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v.Name == "SkibidiBoolId" then
 			continue
 		end
 		GetItem(v)
@@ -2542,7 +2547,7 @@ function AddId(obj,i)
 	end
 	local j = 1
 	for _,v in pairs(obj:GetChildren()) do
-		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) then
+		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v.Name == "SkibidiBoolId" then
 			continue
 		end
 		AddId(v,j)
