@@ -2567,7 +2567,7 @@ newButton.Text = "S T O P ⛔🚫🛑"
 newButton.Position = UDim2.new(0.694, 0,0.736, 0)
 newButton.Size = UDim2.new(0.123, 0,0.15, 0)
 newButton.Parent = newScreen
-newScreen.Parent = plr.PlayerGui
+newScreen.Parent = game:GetService("Players").LocalPlayer.PlayerGui
 
 newButton.MouseButton1Click:Connect(function()
 	IsOn = false
