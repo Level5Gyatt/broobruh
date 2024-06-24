@@ -477,7 +477,8 @@ local PropertyList = {PropertyData = {
 		"Color3",
 		"Texture",
 		"Transparency",
-		"ZIndex"
+		"ZIndex",
+		"Face"
 	},
 	DepthOfFieldEffect = {
 		"FarIntensity",
@@ -2286,6 +2287,11 @@ local PropertyList = {PropertyData = {
 	},
 	AudioDeviceOutput = {
 
+	},
+	NegateOperation = {
+		"RenderFidelity",
+		"SmoothingAngle",
+		"UsePartColor"
 	},
 
 }
