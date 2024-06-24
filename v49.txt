@@ -2442,7 +2442,7 @@ local UnusedProperty = ""
 
 function GetList(obj)
 	local tab = {}
-	local GroupClass = {"FaceInstance","UIGridStyleLayout","AnimationClip","PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
+	local GroupClass = {"Attachment","FaceInstance","UIGridStyleLayout","AnimationClip","PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
 	local class = obj.ClassName
 	if obj.ClassName == "MeshPart" then
 		class = "SpecialMesh"
