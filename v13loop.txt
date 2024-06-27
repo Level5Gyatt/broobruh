@@ -2601,7 +2601,7 @@ while IsOn do
 		GetItem(target[i])
 		for _,v in pairs(des) do
 			if v.ClassName == "PackageLink" then
-				return
+				continue
 			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
 				continue
@@ -2610,7 +2610,7 @@ while IsOn do
 		end
 		for _,v in pairs(des) do
 			if v.ClassName == "PackageLink" then
-				return
+				continue
 			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
 				continue
