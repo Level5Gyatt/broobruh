@@ -477,7 +477,8 @@ local PropertyList = {PropertyData = {
 		"Color3",
 		"Texture",
 		"Transparency",
-		"ZIndex"
+		"ZIndex",
+		"Face"
 	},
 	DepthOfFieldEffect = {
 		"FarIntensity",
@@ -2287,7 +2288,12 @@ local PropertyList = {PropertyData = {
 	AudioDeviceOutput = {
 
 	},
-
+	NegateOperation = {
+		"RenderFidelity",
+		"SmoothingAngle",
+		"UsePartColor"
+	},
+	
 }
 }
 
@@ -2436,7 +2442,7 @@ local UnusedProperty = ""
 
 function GetList(obj)
 	local tab = {}
-	local GroupClass = {"FaceInstance","UIGridStyleLayout","AnimationClip","PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
+	local GroupClass = {"Attachment","FaceInstance","UIGridStyleLayout","AnimationClip","PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
 	local class = obj.ClassName
 	if obj.ClassName == "MeshPart" then
 		class = "SpecialMesh"
@@ -2524,6 +2530,7 @@ function GetItem(obj)
 		GetItem(v)
 	end
 	if #gtab >= ItemsCap then
+		print(HttpService:JSONEncode(gtab))
 		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
 		gtab = {}
 		FileCount = FileCount + 1
