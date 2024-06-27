@@ -2600,19 +2600,31 @@ while IsOn do
 		AddId(target[i])
 		GetItem(target[i])
 		for _,v in pairs(des) do
+			if math.random(1,300) == 69 then
+				wait()
+			end
 			if v.ClassName == "PackageLink" then
 				continue
 			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
+				continue
+			end
+			if v:FindFirstChild("SkibidiRizzId") then
 				continue
 			end
 			AddId(v)
 		end
 		for _,v in pairs(des) do
+			if math.random(1,300) == 69 then
+				wait()
+			end
 			if v.ClassName == "PackageLink" then
 				continue
 			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
+				continue
+			end
+			if v:FindFirstChild("SkibidiBoolId") then
 				continue
 			end
 			GetItem(v)
