@@ -2587,7 +2587,7 @@ newText.Text = "Progress: 0/0"
 newText.Position = UDim2.new(0.694, 0,0.736+0.15, 0)
 newText.Size = UDim2.new(0.123, 0,0.075, 0)
 newText.Parent = newScreen
-newText.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+
 
 newButton.MouseButton1Click:Connect(function()
 	IsOn = false
