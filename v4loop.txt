@@ -2502,12 +2502,12 @@ function GetItem(obj)
 		print("Progress: "..tostring(c).."/"..tostring(count))
 		task.wait()
 	end
-	c = c + 1
+	local tab = nil
 	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
 		return
 	end
 	if not obj:FindFirstChild("SkibidiBoolId") then
-		local tab = {}
+		tab = {}
 		local ProList = GetList(obj)
 		tab = ProList
 		if obj.ClassName == "MeshPart" then
@@ -2520,6 +2520,7 @@ function GetItem(obj)
 		table.insert(gtab,tab)
 		local bool = Instance.new("BoolValue")
 		bool.Name = "SkibidiBoolId"
+		c = c + 1
 		bool.Parent = obj
 	end
 
@@ -2531,6 +2532,7 @@ function GetItem(obj)
 	end
 	if #gtab >= ItemsCap then
 		print(HttpService:JSONEncode(gtab))
+		warn("File added numbero "..tostring(FileCount))
 		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
 		gtab = {}
 		FileCount = FileCount + 1
@@ -2551,6 +2553,7 @@ function AddId(obj,i)
 		NewId.Value = i
 		NewId.Name = "SkibidiRizzId"
 		NewId.Parent = obj
+		count = count + 1
 	end
 	local j = 1
 	for _,v in pairs(obj:GetChildren()) do
@@ -2584,7 +2587,6 @@ end)
 
 while IsOn do
 	for i=1,#target do
-		count = count + #(target[i]:GetDescendants())
 		AddId(target[i],i)
 	end
 	for i=1,#target do
