@@ -2557,6 +2557,7 @@ function AddId(obj,i)
 		NewId.Parent = obj
 		count = count + 1
 	end
+	--[[
 	local j = 1
 	for _,v in pairs(obj:GetChildren()) do
 		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v.Name == "SkibidiBoolId" then
@@ -2565,6 +2566,7 @@ function AddId(obj,i)
 		--AddId(v,j)
 		j = j + 1
 	end
+	]]
 end
 
 print(HttpService:JSONEncode(target))
