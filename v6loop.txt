@@ -2530,7 +2530,7 @@ function GetItem(obj)
 		end
 		GetItem(v)
 	end
-	print(#gtab)
+	--print(#gtab)
 	if #gtab >= ItemsCap then
 		print(HttpService:JSONEncode(gtab))
 		warn("File added numbero "..tostring(FileCount))
