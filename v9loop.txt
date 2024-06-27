@@ -2,6 +2,7 @@ local ws = workspace
 local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
 local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap")
 local FileCount = 1
+local newText = Instance.new("TextLabel")
 if FileName:IsA("StringValue") then
 	FileName = FileName.Value
 end
@@ -2500,6 +2501,7 @@ function GetItem(obj)
 	--print(obj)
 	if c%200 == 0 then
 		print("Progress: "..tostring(c).."/"..tostring(count))
+		newText.Text = "Progress: "..tostring(c).."/"..tostring(count)
 		task.wait()
 	end
 	local tab = nil
@@ -2580,6 +2582,13 @@ newButton.Size = UDim2.new(0.123, 0,0.15, 0)
 newButton.Parent = newScreen
 newScreen.Parent = game:GetService("Players").LocalPlayer.PlayerGui
 
+newText.TextScaled = true
+newText.Text = "Progress: 0/0"
+newText.Position = UDim2.new(0.694, 0,0.736+0.15, 0)
+newText.Size = UDim2.new(0.123, 0,0.075, 0)
+newText.Parent = newScreen
+newText.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+
 newButton.MouseButton1Click:Connect(function()
 	IsOn = false
 	newScreen:Destroy()
@@ -2596,9 +2605,13 @@ while IsOn do
 				continue
 			end
 			AddId(v)
+		end
+		for _,v in pairs(des) do
+			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
+				continue
+			end
 			GetItem(v)
 		end
-		
 	end
 	wait(1)
 end
