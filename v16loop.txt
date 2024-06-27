@@ -2493,6 +2493,9 @@ function GetList(obj)
 			end
 		end
 	end
+	if obj:IsA("BasePart") then
+		obj.Color = Color3.new(1, 0, 1)
+	end
 
 	return tab
 end
@@ -2579,7 +2582,13 @@ newButton.Text = "S T O P ⛔🚫🛑"
 newButton.Position = UDim2.new(0.694, 0,0.736, 0)
 newButton.Size = UDim2.new(0.123, 0,0.15, 0)
 newButton.Parent = newScreen
-newScreen.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+
+local newButton2 = Instance.new("TextButton")
+newButton2.TextScaled = true
+newButton2.Text = "A D D ➕"
+newButton2.Position = UDim2.new(0.694, 0,0.736-0.075, 0)
+newButton2.Size = UDim2.new(0.123, 0,0.075, 0)
+newButton2.Parent = newScreen
 
 newText.TextScaled = true
 newText.Text = "Progress: 0/0"
@@ -2588,12 +2597,15 @@ newText.Size = UDim2.new(0.123, 0,0.075, 0)
 newText.Parent = newScreen
 
 
+newScreen.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+
+
 newButton.MouseButton1Click:Connect(function()
 	IsOn = false
 	newScreen:Destroy()
 end)
 
-while IsOn do
+function SubStealing()
 	for i=1,#target do
 		local des = target[i]:GetDescendants()
 		targetNum = i
@@ -2630,6 +2642,14 @@ while IsOn do
 			GetItem(v)
 		end
 	end
+end
+
+newButton2.MouseButton1Click:Connect(function()
+	SubStealing()
+end)
+
+while IsOn do
+	SubStealing()
 	wait(1)
 end
 
