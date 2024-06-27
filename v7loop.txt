@@ -2503,9 +2503,7 @@ function GetItem(obj)
 		task.wait()
 	end
 	local tab = nil
-	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
-		return
-	end
+	
 	if not obj:FindFirstChild("SkibidiBoolId") then
 		tab = {}
 		local ProList = GetList(obj)
@@ -2561,7 +2559,7 @@ function AddId(obj,i)
 		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v.Name == "SkibidiBoolId" then
 			continue
 		end
-		AddId(v,j)
+		--AddId(v,j)
 		j = j + 1
 	end
 end
@@ -2588,11 +2586,18 @@ end)
 
 while IsOn do
 	for i=1,#target do
-		AddId(target[i],i)
-	end
-	for i=1,#target do
+		local des = target[i]:GetDescendants()
 		targetNum = i
+		AddId(target[i])
 		GetItem(target[i])
+		for _,v in pairs(des) do
+			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
+				continue
+			end
+			AddId(v)
+			GetItem(v)
+		end
+		
 	end
 	wait(1)
 end
