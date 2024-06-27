@@ -2547,9 +2547,6 @@ function AddId(obj,i)
 		wait()
 		--print("progress: "..string(c).."/"..string(count))
 	end
-	if obj.ClassName == "PackageLink" then
-		return
-	end
 	if not obj:FindFirstChild("SkibidiRizzId") then
 		local NewId = Instance.new("IntValue")
 		NewId.Value = i
@@ -2603,12 +2600,18 @@ while IsOn do
 		AddId(target[i])
 		GetItem(target[i])
 		for _,v in pairs(des) do
+			if v.ClassName == "PackageLink" then
+				return
+			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
 				continue
 			end
 			AddId(v)
 		end
 		for _,v in pairs(des) do
+			if v.ClassName == "PackageLink" then
+				return
+			end
 			if v.Name == "OhioFileName" or v.Name == "OhioTargetFolder" or v.Name == "OhioItemsCap" or v.Name == "SkibidiRizzId" or v.Name == "SkibidiBoolId" then
 				continue
 			end
