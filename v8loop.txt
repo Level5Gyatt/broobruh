@@ -2521,13 +2521,14 @@ function GetItem(obj)
 		c = c + 1
 		bool.Parent = obj
 	end
-
+	--[[
 	for _,v in pairs(obj:GetChildren()) do
 		if (v.Name == "SkibidiRizzId" and v:IsA("IntValue")) or v.Name == "SkibidiBoolId" then
 			continue
 		end
 		GetItem(v)
 	end
+	]]
 	--print(#gtab)
 	if #gtab >= ItemsCap then
 		print(HttpService:JSONEncode(gtab))
