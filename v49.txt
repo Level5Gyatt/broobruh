@@ -1918,7 +1918,8 @@ local PropertyList = {PropertyData = {
 		"OffsetStudsU",
 		"OffsetStudsV",
 		"StudsPerTileU",
-		"StudsPerTileV"
+		"StudsPerTileV",
+		"Texture"
 	},
 	Tool = {
 		"CanBeDropped",
