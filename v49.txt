@@ -29,6 +29,28 @@ for _,vv in pairs(target) do
 	end
 end
 
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Name = "OhioAhhGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(126, 126, 126)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.412052125, 0, 0, 0)
+TextLabel.Size = UDim2.new(0.174918577, 0, 0.100000001, 0)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "x/100000"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextStrokeTransparency = 0.000
+TextLabel.TextWrapped = true
+
 print(FileName)
 print(HttpService:JSONEncode(target))
 local PropertyList = {PropertyData = {
@@ -2294,7 +2316,26 @@ local PropertyList = {PropertyData = {
 		"SmoothingAngle",
 		"UsePartColor"
 	},
+	StarterPack = {
 
+	},
+	BodyPartDescription = {
+		"AssetId",
+		"BodyPart",
+		"Color",
+		"Instance"
+	},
+	AccessoryDescription = {
+		"AccessoryType",
+		"AssetId",
+		"Instance",
+		"IsLayered",
+		"Order",
+		"Position",
+		"Puffiness",
+		"Rotation",
+		"Scale"
+	}
 }
 }
 
@@ -2500,11 +2541,12 @@ end
 function GetItem(obj)
 	--print(obj)
 	if c%200 == 0 then
-		print("Progress: "..tostring(c).."/"..tostring(count))
+		--print("Progress: "..tostring(c).."/"..tostring(count))
+		TextLabel.Text = "Progress: "..tostring(c).."/"..tostring(count)
 		task.wait()
 	end
 	c = c + 1
-	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" then
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" or obj.Name == "OhioAhhGui" then
 		return
 	end
 	local tab = {}
