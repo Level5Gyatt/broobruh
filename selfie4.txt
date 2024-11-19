@@ -15,6 +15,7 @@ local CameraLock = Instance.new("TextButton")
 SelfieControl.Name = "SelfieControl"
 SelfieControl.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 SelfieControl.IgnoreGuiInset = true
+SelfieControl.ResetOnSpawn = false
 
 game.Players.LocalPlayer.PlayerGui.ScreenOrientation = Enum.ScreenOrientation.Portrait
 
@@ -33,13 +34,13 @@ RightArmLock.BorderSizePixel = 0
 RightArmLock.Position = UDim2.new(0.81615597, 0, 0, 0)
 RightArmLock.Size = UDim2.new(0.183814645, 0, 1, 0)
 RightArmLock.Font = Enum.Font.SourceSans
-RightArmLock.Text = "sigma"
+RightArmLock.Text = "X"
 RightArmLock.TextColor3 = Color3.fromRGB(255, 255, 255)
 RightArmLock.TextScaled = true
 RightArmLock.TextSize = 14.000
 RightArmLock.TextStrokeTransparency = 0.000
 RightArmLock.TextWrapped = true
-RightArmLock.Visible = false
+RightArmLock.Visible = true
 
 CameraLock.Name = "CameraLock"
 CameraLock.Parent = Frame
@@ -180,7 +181,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 	
 	local CFNew, CFAng, asin = CFrame.new, CFrame. Angles, math.asin
 	
-	RunService.RenderStepped:Connect(function()
+	local LoopRender = RunService.RenderStepped:Connect(function()
 		
 		local Character = TargetPlr.Character
 		if not Character then
@@ -248,6 +249,14 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 	end)
 	
 	SelfieControl.Frame.RightArmLock.MouseButton1Click:Connect(function()
+		LoopRender:Disconnect()
+		Camera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+		cameraLocked = false
+		SelfieControl:Destroy()
+		
+		if true then
+			return
+		end
 		local Character = TargetPlr.Character
 		if not Character then
 			return
