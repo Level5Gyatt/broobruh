@@ -14,6 +14,7 @@ local CameraLock = Instance.new("TextButton")
 
 SelfieControl.Name = "SelfieControl"
 SelfieControl.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+SelfieControl.IgnoreGuiInset = true
 
 game.Players.LocalPlayer.PlayerGui.ScreenOrientation = Enum.ScreenOrientation.Portrait
 
@@ -284,7 +285,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 		toggleCameraLock(HNR,Character)
 		
 		if cameraLocked then
-			SelfieControl.Frame.CameraLock.Text = "Camera is lockihg"
+			SelfieControl.Frame.CameraLock.Text = "Camera is locking"
 		else
 			SelfieControl.Frame.CameraLock.Text = "Camera is unlocking"
 		end
