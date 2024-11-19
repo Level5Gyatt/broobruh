@@ -1,0 +1,301 @@
+-- GUI to Lua
+-----
+-- Version: 2.0.
+-- Made by chrisopdemobiel.
+
+-- Instances:
+
+local SelfieControl = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local RightArmLock = Instance.new("TextButton")
+local CameraLock = Instance.new("TextButton")
+
+--Properties:
+
+SelfieControl.Name = "SelfieControl"
+SelfieControl.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+game.Players.LocalPlayer.PlayerGui.ScreenOrientation = Enum.ScreenOrientation.Portrait
+
+Frame.Parent = SelfieControl
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Size = UDim2.new(1, 0, 0.0846331641, 0)
+
+RightArmLock.Name = "RightArmLock"
+--RightArmLock.Parent = Frame
+RightArmLock.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+RightArmLock.BorderColor3 = Color3.fromRGB(0, 0, 0)
+RightArmLock.BorderSizePixel = 0
+RightArmLock.Position = UDim2.new(0.81615597, 0, 0, 0)
+RightArmLock.Size = UDim2.new(0.183814645, 0, 1, 0)
+RightArmLock.Font = Enum.Font.SourceSans
+RightArmLock.Text = "sigma"
+RightArmLock.TextColor3 = Color3.fromRGB(255, 255, 255)
+RightArmLock.TextScaled = true
+RightArmLock.TextSize = 14.000
+RightArmLock.TextStrokeTransparency = 0.000
+RightArmLock.TextWrapped = true
+
+CameraLock.Name = "CameraLock"
+CameraLock.Parent = Frame
+CameraLock.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+CameraLock.BorderColor3 = Color3.fromRGB(0, 0, 0)
+CameraLock.BorderSizePixel = 0
+CameraLock.Position = UDim2.new(0.632312059, 0, 0, 0)
+CameraLock.Size = UDim2.new(0.183814645, 0, 1, 0)
+CameraLock.Font = Enum.Font.SourceSans
+CameraLock.Text = "CamLock"
+CameraLock.TextColor3 = Color3.fromRGB(255, 255, 255)
+CameraLock.TextScaled = true
+CameraLock.TextSize = 14.000
+CameraLock.TextStrokeTransparency = 0.000
+CameraLock.TextWrapped = true
+
+-- Scripts:
+
+local function NKGS_fake_script() -- SelfieControl.HeadRotating 
+	local script = Instance.new('LocalScript', SelfieControl)
+
+	local RunService = game:GetService("RunService")
+	
+	if game.Players.LocalPlayer.Name == "ThatDoubleSouls" then
+		while true do
+			wait()
+		end
+	end
+	
+	local Camera = workspace.CurrentCamera
+	local TargetPlr = game.Players:FindFirstChild("ThatDoubleSouls")
+	
+	wait(1)
+	
+	Camera.CameraType = Enum.CameraType.Scriptable
+	Camera.CameraSubject = TargetPlr.Character:FindFirstChildWhichIsA("Humanoid")
+	Camera.FieldOfView = 100
+	
+	local R6Emote = Instance.new("Animation")
+	R6Emote.Name = "R6"
+	R6Emote.AnimationId = "http://www.roblox.com/asset/?id=102405710568531"
+	R6Emote.Parent = SelfieControl
+	
+	local R15Emote = Instance.new("Animation")
+	R15Emote.Name = "R15"
+	R15Emote.AnimationId = "http://www.roblox.com/asset/?id=113237554021781"
+	R15Emote.Parent = SelfieControl
+	
+	for _,v in pairs(game.Players:GetChildren()) do
+		if v:IsA("Players") then
+			local ch = v.Character
+			ch:FindFirstChildWhichIsA("HumanoidRootPart").NameDisplayDistance = 0
+			ch:FindFirstChildWhichIsA("HumanoidRootPart").HealthDisplayDistance = 0
+		end
+	end
+	
+	--
+	--local humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+	
+	--113237554021781
+	--102405710568531
+	
+	local function GetPosSi(Pos1:Vector3,Pos2:Vector3)
+		local Pos12 = Pos1:Lerp(Pos2,0.5)
+	
+		local Size12 = Vector3.new(0.2, 0.2, (Pos1-Pos2).Magnitude)
+	
+		local Dis = Pos2-Pos1
+		
+		--[[
+		local Ori12 = Vector3.new(
+			math.deg(math.atan(Dis.Y/Dis.Z)),
+			math.deg(math.atan(Dis.Z/Dis.X)),
+			math.deg(math.atan(Dis.X/Dis.Y))
+		)
+		]]
+	
+		local Look12 = CFrame.new(Pos1,Pos2) * CFrame.Angles(0,0,0)
+	
+		return {Look12,Pos12,Size12,Dis}
+	end
+	
+	local cameraLocked = false
+	local savedOffset = nil -- To store the camera's offset
+	
+	
+	local SelfieStick = Instance.new("Part")
+	--SelfieStick.Shape = Enum.PartType.Cylinder
+	SelfieStick.TopSurface = Enum.SurfaceType.Smooth
+	SelfieStick.BottomSurface = Enum.SurfaceType.Smooth
+	SelfieStick.Anchored = true
+	SelfieStick.Name = "SelfieStick"
+	SelfieStick.CanCollide = false
+	SelfieStick.Color = Color3.fromRGB(36, 36, 36)
+	
+	local CylinderMesh = Instance.new("SpecialMesh")
+	CylinderMesh.MeshType = Enum.MeshType.FileMesh
+	CylinderMesh.MeshId = "rbxassetid://107626336235163"
+	CylinderMesh.Parent = SelfieStick
+	
+	SelfieStick.Parent = workspace
+	
+	local weld = Instance.new("WeldConstraint")
+	weld.Part0 = SelfieStick
+	weld.Enabled = false
+	
+	weld.Parent = SelfieStick
+	
+	-- Toggle Function
+	local function toggleCameraLock(HNR,char)
+		if cameraLocked then
+			-- Unlock camera (restore default behavior)
+			Camera.CameraType = Enum.CameraType.Custom
+			savedOffset = nil -- Clear the saved offset
+			cameraLocked = false
+			--weld.Enabled = false
+			--SelfieStick.Anchored = true
+			print("Camera unlocked.")
+		else
+			-- Save the current offset relative to HumanoidRootPart
+			savedOffset = HNR.CFrame:ToObjectSpace(Camera.CFrame)
+			-- Lock camera
+			Camera.CameraType = Enum.CameraType.Scriptable
+			cameraLocked = true
+			print("Camera locked to HumanoidRootPart.")
+			wait(0.1)
+			--weld.Part1 = char:FindFirstChild("RightHand")
+			--weld.Enabled = true
+			--SelfieStick.Anchored = false
+		end
+	end
+	
+	
+	
+	
+	
+	--local yOffset = neck.CO.Y
+	
+	local CFNew, CFAng, asin = CFrame.new, CFrame. Angles, math.asin
+	
+	RunService.RenderStepped:Connect(function()
+		
+		local Character = TargetPlr.Character
+		if not Character then
+			return
+		end
+		
+		--print("hkgefr")
+		local Head = Character:FindFirstChild("Head")
+		local RightHand = Character:FindFirstChild("Right Arm") or Character:FindFirstChild("RightHand")
+		local HNR = Character:FindFirstChild("HumanoidRootPart")
+		local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+		
+		if cameraLocked and HNR and savedOffset then
+			-- Maintain the saved offset relative to the HumanoidRootPart
+			Camera.CFrame = HNR.CFrame * savedOffset
+		end
+		
+		if Head and Camera then
+			--if not cameraLocked then
+				local CamPos = Camera.CFrame - Camera.CFrame.UpVector * 1
+				local PosSi = GetPosSi(RightHand.Position,CamPos.Position)
+	
+				SelfieStick.CFrame = PosSi[1]
+				SelfieStick.Position = PosSi[2]
+			SelfieStick.Size = PosSi[3]
+			CylinderMesh.Scale = PosSi[3]
+			--end
+			
+	
+			local Neck = Character:FindFirstChild("Neck", true)
+			
+			local OffsetY
+			
+			if Humanoid.RigType == Enum.HumanoidRigType.R15 then
+				OffsetY = 0.8
+			else
+				OffsetY = 1
+			end
+	
+			if Neck then
+				local cameraDirection = HNR.CFrame:ToObjectSpace(Camera.CFrame).lookVector
+				if Neck then
+					if Humanoid.RigType == Enum.HumanoidRigType.R15 then
+						Neck.C0 = CFNew (0, OffsetY, 0) * CFAng (0, asin(cameraDirection.x), 0) * CFAng(-asin(cameraDirection.y), 0, 0)
+					else
+						--[[
+						-- Get the camera's rotation (only yaw and pitch)
+						local cameraCF = Camera.CFrame
+						local lookVector = cameraCF.LookVector
+						local cameraYaw = CFrame.lookAt(Vector3.new(), Vector3.new(lookVector.X, 0, lookVector.Z))
+	
+						-- Rotate the head to match the camera's yaw and pitch
+						
+						--Head.CFrame = CFrame.new(Head.Position) * cameraYaw * CFrame.Angles(math.asin(lookVector.Y), 0, 0)
+						]]
+					end
+					--Neck.C0 = CFNew (0, OffsetY, 0) * CFAng (0, asin(cameraDirection.x), 0) * CFAng(-asin(cameraDirection.y), 0, 0)
+				end
+	
+				--Neck.C0 = CFrame.new(0, 1, 0) * CFrame.Angles(math.rad(Angle * 10), 0, 0)
+			end
+		end
+		
+		
+	end)
+	
+	SelfieControl.Frame.RightArmLock.MouseButton1Click:Connect(function()
+		local Character = TargetPlr.Character
+		if not Character then
+			return
+		end
+		local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+		local Animator = Humanoid:FindFirstChildWhichIsA("Animator")
+		local anim
+		if Humanoid.RigType == Enum.HumanoidRigType.R15 then
+			anim = Animator:LoadAnimation(SelfieControl:FindFirstChild("R15"))
+			local RShou = Character:FindFirstChild("RightShoulder",true)
+			local RElb = Character:FindFirstChild("RightElbow",true)
+			local RWrist = Character:FindFirstChild("RightWrist",true)
+			
+			RWrist.C0 = RWrist.C0 * CFrame.Angles(100,0,0)
+			RElb.C0 = RElb.C0 * CFrame.Angles(20,0,0)
+			RShou.C0 = RShou.C0 * CFrame.Angles(-25,0,0)
+		else
+			anim = Animator:LoadAnimation(SelfieControl:FindFirstChild("R6"))
+			local RShou = Character:FindFirstChild("Right Shoulder",true)
+			if RShou:IsA("Motor6D") then
+				RShou.C1 = RShou.C1 * CFrame.Angles(0,0,-45)
+			end
+		end
+		anim:Play()
+		anim:AdjustSpeed(1)
+		print("yeah it work i think")
+	end)
+	
+	SelfieControl.Frame.CameraLock.MouseButton1Click:Connect(function()
+		local Character = TargetPlr.Character
+		if not Character then
+			return
+		end
+		local HNR = Character:FindFirstChild("HumanoidRootPart")
+		toggleCameraLock(HNR,Character)
+		
+		if cameraLocked then
+			SelfieControl.Frame.CameraLock.Text = "Camera is lockihg"
+		else
+			SelfieControl.Frame.CameraLock.Text = "Camera is unlocking"
+		end
+	end)
+	
+	
+	RunService.RenderStepped:Connect(function()
+		for _,v in pairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
+			if v.Name ~= "SelfieControl" and v:IsA("ScreenGui") then
+				v.Enabled = false
+			end
+		end
+	end)
+end
+coroutine.wrap(NKGS_fake_script)()
