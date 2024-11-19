@@ -199,10 +199,18 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 			Camera.CFrame = HNR.CFrame * savedOffset
 		end
 		
+		local RightHandPosition
+		if Humanoid.RigType == Enum.HumanoidRigType.R15 then
+			RightHandPosition = RightHand.CFrame + RightHand.CFrame.LookVector * 0.25
+		else
+			RightHandPosition = RightHand.CFrame + RightHand.CFrame.LookVector * 0.25 - RightHand.CFrame.LookVector * 1.25
+		end
+		RightHandPosition = RightHandPosition.Position
+		
 		if Head and Camera then
 			--if not cameraLocked then
 				local CamPos = Camera.CFrame - Camera.CFrame.UpVector * 1
-				local PosSi = GetPosSi(RightHand.Position,CamPos.Position)
+				local PosSi = GetPosSi(RightHandPosition,CamPos.Position)
 	
 				SelfieStick.CFrame = PosSi[1]
 				SelfieStick.Position = PosSi[2]
