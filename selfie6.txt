@@ -76,7 +76,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 	wait(1)
 	
 	Camera.CameraType = Enum.CameraType.Scriptable
-	Camera.CameraSubject = TargetPlr.Character:FindFirstChildWhichIsA("Humanoid")
+	Camera.CameraSubject = TargetPlr.Character:FindFirstChild("Head")
 	Camera.FieldOfView = 100
 	
 	local R6Emote = Instance.new("Animation")
@@ -258,7 +258,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 	
 	SelfieControl.Frame.RightArmLock.MouseButton1Click:Connect(function()
 		LoopRender:Disconnect()
-		Camera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+		Camera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
 		cameraLocked = false
 		SelfieControl:Destroy()
 		
