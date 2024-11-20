@@ -64,14 +64,14 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 
 	local RunService = game:GetService("RunService")
 	
-	if game.Players.LocalPlayer.Name == "ThatDoubleSouls" then
+	if game.Players.LocalPlayer.Name == "ThatDoubleSouls" or game.Players.LocalPlayer.Name == "Player1" then
 		while true do
 			wait()
 		end
 	end
 	
 	local Camera = workspace.CurrentCamera
-	local TargetPlr = game.Players:FindFirstChild("ThatDoubleSouls")
+	local TargetPlr = game.Players:FindFirstChild("ThatDoubleSouls") or game.Players:FindFirstChild("Player1")
 	
 	wait(1)
 	
@@ -90,10 +90,13 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 	R15Emote.Parent = SelfieControl
 	
 	for _,v in pairs(game.Players:GetChildren()) do
-		if v:IsA("Players") then
+		if v:IsA("Player") then
 			local ch = v.Character
-			ch:FindFirstChildWhichIsA("HumanoidRootPart").NameDisplayDistance = 0
-			ch:FindFirstChildWhichIsA("HumanoidRootPart").HealthDisplayDistance = 0
+			if ch:IsA("Model") then
+				ch:FindFirstChildWhichIsA("Humanoid").DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+				ch:FindFirstChildWhichIsA("Humanoid").HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
+			end
+			
 		end
 	end
 	
@@ -203,7 +206,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 		if Humanoid.RigType == Enum.HumanoidRigType.R15 then
 			RightHandPosition = RightHand.CFrame + RightHand.CFrame.LookVector * 0.25
 		else
-			RightHandPosition = RightHand.CFrame + RightHand.CFrame.LookVector * 0.25 - RightHand.CFrame.LookVector * 1.25
+			RightHandPosition = RightHand.CFrame - RightHand.CFrame.LookVector * 0.25 + RightHand.CFrame.LookVector * 1.25
 		end
 		RightHandPosition = RightHandPosition.Position
 		
@@ -260,6 +263,7 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 		LoopRender:Disconnect()
 		Camera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
 		cameraLocked = false
+		SelfieStick:Destroy()
 		SelfieControl:Destroy()
 		
 		if true then
@@ -282,8 +286,15 @@ local function NKGS_fake_script() -- SelfieControl.HeadRotating
 			RElb.C0 = RElb.C0 * CFrame.Angles(20,0,0)
 			RShou.C0 = RShou.C0 * CFrame.Angles(-25,0,0)
 		else
+			if true then
+				return
+			end
 			anim = Animator:LoadAnimation(SelfieControl:FindFirstChild("R6"))
-			local RShou = Character:FindFirstChild("Right Shoulder",true)
+			local RArm = Character:FindFirstChild("Right Arm"):Destroy()
+			local RShou = Character:FindFirstChild("Right Shoulder"):Destroy()
+
+			--RArm
+			
 			if RShou:IsA("Motor6D") then
 				RShou.C1 = RShou.C1 * CFrame.Angles(0,0,-45)
 			end
