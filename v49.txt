@@ -1941,7 +1941,10 @@ local PropertyList = {PropertyData = {
 		"OffsetStudsV",
 		"StudsPerTileU",
 		"StudsPerTileV",
-		"Texture"
+		"Texture",
+		"Color3",
+		"Zindex",
+		"Transparency"
 	},
 	Tool = {
 		"CanBeDropped",
@@ -2335,6 +2338,12 @@ local PropertyList = {PropertyData = {
 		"Puffiness",
 		"Rotation",
 		"Scale"
+	},
+	UIFlexItem = {
+		"FlexMode",
+		"GrowRatio",
+		"ItemLineAlignment",
+		"ShrinkRatio"
 	}
 }
 }
