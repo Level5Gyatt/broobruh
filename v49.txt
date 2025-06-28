@@ -281,7 +281,7 @@ function GetItem(obj,st)
 		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
 			continue
 		end
-		GetItem(v)
+		GetItem(v,false)
 	end
 	if #gtab >= ItemsCap then
 		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
