@@ -1,0 +1,349 @@
+local ws = workspace
+local FileName = game:GetService("ReplicatedStorage"):FindFirstChild("OhioFileName") or "Place"..tostring(game.PlaceId)..".txt"
+local ItemsCap = game:GetService("ReplicatedStorage"):FindFirstChild("OhioItemsCap")
+local FileCount = 1
+if FileName:IsA("StringValue") then
+	FileName = FileName.Value
+end
+if ItemsCap:IsA("IntValue") then
+	ItemsCap = ItemsCap.Value
+else
+	ItemsCap = 50000
+end
+local HttpService = game:GetService("HttpService")
+local OhioTargetFolder = game:GetService("ReplicatedStorage"):FindFirstChild("OhioTargetFolder")
+local target = {ws}
+
+if OhioTargetFolder then
+	target = {}
+	for _,v in pairs(OhioTargetFolder:GetChildren()) do
+		table.insert(target,v.Value)
+	end
+end
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
+	end
+end
+
+--local ScreenGui = Instance.new("ScreenGui")
+--local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+--[[
+ScreenGui.Name = "OhioAhhGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(126, 126, 126)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.412052125, 0, 0, 0)
+TextLabel.Size = UDim2.new(0.174918577, 0, 0.100000001, 0)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "x/100000"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextStrokeTransparency = 0.000
+TextLabel.TextWrapped = true
+]]
+
+print(FileName)
+print(HttpService:JSONEncode(target))
+local PropertyList = loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/refs/heads/main/PropertyData.lua',true))()
+
+print("Workign???")
+local c = 1
+local count = 0
+local l = 3
+local fi = 1
+local nam = "test"
+local targetNum = 1
+local gtab = {}
+--game.ReplicatedStorage.Str:ClearAllChildren()
+
+function GetPath(v)
+	if v:FindFirstChild("SkibidiRizzId") == nil then
+		return nil
+	end
+	local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
+	local e = v
+	while e ~= target[targetNum] do
+		e = e.Parent
+		if not e then break end
+		if not e:FindFirstChild("SkibidiRizzId") then break end
+		s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
+	end
+	if e == target[targetNum] then
+		return s
+	else return nil
+	end
+end
+
+function removeHighAsciiChars(inputString)
+	local result = ""
+	for i = 1, #inputString do
+		local char = string.byte(inputString, i)
+		if char <= 127 then
+			result = result .. string.char(char)
+		end
+	end
+	return result
+end
+
+function NumberFloatFix(n)
+	return math.round(n*1000)/1000
+end
+
+function GetDataValue(v)
+	if typeof(v) == "nil" then
+		return nil
+	end
+	if typeof(v) == "Axes" then
+
+	elseif typeof(v) == "BrickColor" then
+		return {"BrickColor",v.Number}
+	elseif typeof(v) == "CFrame" then
+		local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = v:GetComponents()
+		return {"CFrame",tostring(NumberFloatFix(x)).."|"..
+			tostring(NumberFloatFix(y)).."|"..
+			tostring(NumberFloatFix(z)).."|"..
+			tostring(NumberFloatFix(R00)).."|"..
+			tostring(NumberFloatFix(R01)).."|"..
+			tostring(NumberFloatFix(R02)).."|"..
+			tostring(NumberFloatFix(R10)).."|"..
+			tostring(NumberFloatFix(R11)).."|"..
+			tostring(NumberFloatFix(R12)).."|"..
+			tostring(NumberFloatFix(R20)).."|"..
+			tostring(NumberFloatFix(R21)).."|"..
+			tostring(NumberFloatFix(R22))}
+	elseif typeof(v) == "Color3" then
+		return {"Color3",v:ToHex()}
+	elseif typeof(v) == "ColorSequence" then
+		local s = ""
+		for _,x in pairs(v.Keypoints) do
+			s = s..tostring(NumberFloatFix(x.Time)).."|"..x.Value:ToHex().."_"
+		end
+		s = string.sub(s,1,s:len()-1)
+		return {"ColorSequence",s}
+	elseif typeof(v) == "ColorSequenceKeypoint" then
+		return {"ColorSequenceKeypoint",tostring(NumberFloatFix(v.Time)).."|"..v.Value:ToHex()}
+	elseif typeof(v) == "DateTime" then
+		return {"DateTime",tostring(v.UnixTimestamp)}
+	elseif typeof(v) == "EnumItem" then
+		return {"EnumItem",tostring(v.EnumType).."|"..v.Name}
+	elseif typeof(v) == "Faces" then
+		return {"Faces",tostring(v.Top).."|"..tostring(v.Bottom).."|"..tostring(v.Left).."|"..tostring(v.Right).."|"..tostring(v.Back).."|"..tostring(v.Front)}
+	elseif typeof(v) == "Font" then
+		return {"Font",tostring(v.Family).."|"..tostring(v.Weight).."|"..tostring(v.Style)}
+	elseif typeof(v) == "Instance" then
+		if v:FindFirstChild("SkibidiRizzId") == nil then
+			return nil
+		end
+		local s = tostring(v:FindFirstChild("SkibidiRizzId").Value)
+		local e = v
+		while e ~= target[targetNum] do
+			e = e.Parent
+			if not e then break end
+			if not e:FindFirstChild("SkibidiRizzId") then break end
+			s = tostring(e:FindFirstChild("SkibidiRizzId").Value).."."..s
+		end
+		if e == target[targetNum] then
+			return {"Instance",s}
+		else return nil
+		end
+
+	elseif typeof(v) == "NumberRange" then
+		return {"NumberRange",tostring(NumberFloatFix(v.Min)).."|"..tostring(NumberFloatFix(v.Max))}
+	elseif typeof(v) == "NumberSequence" then
+		local s = ""
+		for _,x in pairs(v.Keypoints) do
+			s = s..tostring(NumberFloatFix(x.Time)).."|"..tostring(NumberFloatFix(x.Value)).."|"..tostring(NumberFloatFix(x.Envelope)).."_"
+		end
+		s = string.sub(s,1,s:len()-1)
+		return {"NumberSequence",s}
+	elseif typeof(v) == "NumberSequenceKeypoint" then
+		return {"NumberSequenceKeypoint",tostring(NumberFloatFix(v.Time)).."|"..tostring(NumberFloatFix(v.Value)).."|"..tostring(NumberFloatFix(v.Envelope))}
+	elseif typeof(v) == "PhysicalProperties" then
+		return {"PhysicalProperties",tostring(v.Density).."|"..tostring(v.Friction).."|"..tostring(v.Elasticity).."|"..tostring(v.FrictionWeight).."|"..tostring(v.ElasticityWeight)}
+
+	elseif typeof(v) == "UDim" then
+		return {"UDim",tostring(NumberFloatFix(v.Scale)).."|"..tostring(NumberFloatFix(v.Offset))}
+	elseif typeof(v) == "UDim2" then
+		return {"UDim2",tostring(NumberFloatFix(v.X.Scale)).."|"..tostring(NumberFloatFix(v.X.Offset)).."|"..tostring(NumberFloatFix(v.Y.Scale)).."|"..tostring(NumberFloatFix(v.Y.Offset))}
+	elseif typeof(v) == "Vector2" then
+		return {"Vector2",tostring(NumberFloatFix(v.X)).."|"..tostring(NumberFloatFix(v.Y))}
+	elseif typeof(v) == "Vector3" then
+		return {"Vector3",tostring(NumberFloatFix(v.X)).."|"..tostring(NumberFloatFix(v.Y)).."|"..tostring(NumberFloatFix(v.Z))}
+	elseif typeof(v) == "boolean" then
+		return {"boolean",tostring(v)}
+	elseif typeof(v) == "number" then
+		return {"number",tostring(NumberFloatFix(v))}
+	elseif typeof(v) == "Rect" then
+		return {"Rect",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y)}
+	elseif typeof(v) == "Region3int16" then
+		return {"Region3int16",tostring(v.Min.X).."|"..tostring(v.Min.Y).."|"..tostring(v.Min.Z).."|"..tostring(v.Max.X).."|"..tostring(v.Max.Y).."|"..tostring(v.Max.Z)}
+	elseif typeof(v) == "string" then
+		local s = v
+		return {"string",removeHighAsciiChars(s:sub(1,100)):gsub('"',"&quot;"):gsub("},{","&sep;")}
+	else
+		warn("you forgor this datavalue "..typeof(v))
+		return {typeof(v)}
+	end
+
+end
+
+local UnusedProperty = ""
+
+function GetList(obj)
+	local tab = {}
+	local GroupClass = {"Attachment","FaceInstance","UIGridStyleLayout","AnimationClip","PostEffect","PartOperation","DataModelMesh","SlidingBallConstraint","JointInstance","FileMesh","GuiObject","GuiButton","TriangleMeshPart","GuiBase3d","PartAdornment","Accoutrement","BasePart","GuiBase2d","LayerCollector","Model","ControllerBase","Constraint"}
+	local class = obj.ClassName
+	if obj.ClassName == "MeshPart" then
+		class = "SpecialMesh"
+	end
+	if typeof(PropertyList.PropertyData[obj.ClassName]) == "table" then
+
+		for _,v in pairs(PropertyList.PropertyData[obj.ClassName]) do
+			local suc,val = pcall(function() return obj[v] end)
+			if suc then
+				tab[v] = GetDataValue(val)
+			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
+				warn(obj.ClassName,v,"Can't read")
+				continue
+			end
+			--tab[v] = GetDataValue(obj[v])
+			--if obj.ClassName ~= "MeshPart" then
+
+			--[[
+			local e = obj[v]
+			local suc,val = pcall(function() obj[v] = e return true end)
+			--print(obj.ClassName,v)
+			if suc then
+				obj[v] = e
+			else
+				UnusedProperty = UnusedProperty..obj.ClassName.."-"..v..","
+				warn(obj.ClassName,v,"Read only")
+				continue
+			end
+			]]
+
+			--end
+		end
+	else
+		warn("you forgor this object ",obj,obj.ClassName)
+	end
+	for _,x in pairs(GroupClass) do
+		if obj:IsA(x) then
+			if typeof(PropertyList.PropertyData[x]) == "table" then
+				for _,v in pairs(PropertyList.PropertyData[x]) do
+					tab[v] = GetDataValue(obj[v])
+					--local e = obj[v]
+					--obj[v] = e
+				end
+			else
+				warn("you forgor this object ",obj,x)
+			end
+		end
+	end
+
+	return tab
+end
+
+function GetItem(obj)
+	--print(obj)
+	if c%200 == 0 then
+		--print("Progress: "..tostring(c).."/"..tostring(count))
+		--TextLabel.Text = "Progress: "..tostring(c).."/"..tostring(count)
+		task.wait()
+	end
+	c = c + 1
+	if obj.Name == "OhioFileName" or obj.Name == "OhioTargetFolder" or obj.Name == "OhioItemsCap" or obj.Name == "OhioAhhGui" then
+		return
+	end
+	local tab = {}
+	local ProList = GetList(obj)
+	tab = ProList
+	if obj.ClassName == "MeshPart" then
+		tab["Class"] = "MeshPart"
+	else
+		tab["Class"] = obj.ClassName
+	end
+	tab["Path"] = GetPath(obj)
+	tab["Name"] = GetDataValue(string.sub(obj.Name,1,math.min(string.len(obj.Name),20)))
+	table.insert(gtab,tab)
+
+	for _,v in pairs(obj:GetChildren()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			continue
+		end
+		GetItem(v)
+	end
+	if #gtab >= ItemsCap then
+		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
+		gtab = {}
+		FileCount = FileCount + 1
+	end
+	return tab
+end
+
+function AddId(obj,i)
+	if c%250 == 0 then
+		wait()
+		--print("progress: "..string(c).."/"..string(count))
+	end
+	if obj.ClassName == "PackageLink" then
+		return
+	end
+	if not obj:FindFirstChild("SkibidiRizzId") then
+		local NewId = Instance.new("IntValue")
+		NewId.Value = i
+		NewId.Name = "SkibidiRizzId"
+		NewId.Parent = obj
+	end
+	local j = 1
+	for _,v in pairs(obj:GetChildren()) do
+		if (v:IsA("IntValue") and v.Name == "SkibidiRizzId") then
+			continue
+		end
+		AddId(v,j)
+		j = j + 1
+	end
+end
+
+print(HttpService:JSONEncode(target))
+for i=1,#target do
+
+	count = count + #(target[i]:GetDescendants())
+	AddId(target[i],i)
+end
+
+for i=1,#target do
+	targetNum = i
+	GetItem(target[i])
+end
+
+for _,vv in pairs(target) do
+	for _,v in pairs(vv:GetDescendants()) do
+		if v:IsA("IntValue") and v.Name == "SkibidiRizzId" then
+			v:Destroy()
+		end
+	end
+end
+
+print(gtab,#gtab)
+LeString = HttpService:JSONEncode(gtab)
+print(LeString)
+
+writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",LeString)
+writefile("UnusedProperty.txt",UnusedProperty)
+
+
+--
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/Level5Gyatt/broobruh/main/v32.txt',true))()
