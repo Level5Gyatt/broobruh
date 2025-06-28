@@ -285,6 +285,7 @@ function GetItem(obj,st)
 	end
 	if #gtab >= ItemsCap then
 		writefile(FileName:split(".")[1].."_"..tostring(FileCount)..".txt",HttpService:JSONEncode(gtab))
+		wait(5)
 		gtab = {}
 		FileCount = FileCount + 1
 	end
