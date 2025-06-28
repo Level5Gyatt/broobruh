@@ -254,7 +254,7 @@ function GetList(obj)
 	return tab
 end
 
-function GetItem(obj)
+function GetItem(obj,st)
 	--print(obj)
 	if c%200 == 0 then
 		--print("Progress: "..tostring(c).."/"..tostring(count))
@@ -288,7 +288,9 @@ function GetItem(obj)
 		gtab = {}
 		FileCount = FileCount + 1
 	end
-	return tab
+	if not st then
+		return tab
+	end
 end
 
 function AddId(obj,i)
@@ -324,7 +326,7 @@ end
 
 for i=1,#target do
 	targetNum = i
-	GetItem(target[i])
+	GetItem(target[i],true)
 end
 
 for _,vv in pairs(target) do
