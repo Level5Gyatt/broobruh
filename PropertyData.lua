@@ -1888,7 +1888,7 @@ return {PropertyData = {
 		"StudsPerTileV",
 		"Texture",
 		"Color3",
-		"Zindex",
+		"ZIndex",
 		"Transparency"
 	},
 	Tool = {
