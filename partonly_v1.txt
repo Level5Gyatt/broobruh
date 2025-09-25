@@ -64,6 +64,7 @@ ScreenGui.Name = "OhioAhhGui"
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.DisplayOrder = 10000
 
 
 TextLabel.Parent = ScreenGui
