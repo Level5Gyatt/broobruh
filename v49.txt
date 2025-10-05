@@ -35,7 +35,7 @@ local TextLabel = Instance.new("TextLabel")
 --Properties:
 
 ScreenGui.Name = "OhioAhhGui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
 TextLabel.Parent = ScreenGui
 TextLabel.BackgroundColor3 = Color3.fromRGB(126, 126, 126)
